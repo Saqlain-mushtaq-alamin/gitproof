@@ -1,0 +1,20 @@
+# Copy to .github/workflows/ in a repo to publish a fresh report weekly.
+name: gitproof report
+on:
+  schedule: [{ cron: "0 3 * * 1" }]
+  workflow_dispatch:
+jobs:
+  report:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - run: pip install "gitproof[pdf]"
+      - run: |
+          gitproof analyze ${{ github.repository_owner }}
+          gitproof export -f md -o report.md
+          gitproof export -f pdf --layout summary -o report.pdf
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/upload-artifact@v4
+        with: { name: proof-of-work, path: "report.*" }
