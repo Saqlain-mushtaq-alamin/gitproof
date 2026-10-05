@@ -12,8 +12,18 @@ class PdfError(Exception):
     pass
 
 
-BROWSER_NAMES = ("google-chrome", "google-chrome-stable", "chromium", "chromium-browser",
-                 "chrome", "msedge", "microsoft-edge", "microsoft-edge-stable", "brave-browser")
+BROWSER_NAMES = (
+    "google-chrome",
+    "google-chrome-stable",
+    "chromium",
+    "chromium-browser",
+    "chrome-headless-shell",
+    "chrome",
+    "msedge",
+    "microsoft-edge",
+    "microsoft-edge-stable",
+    "brave-browser",
+)
 BROWSER_PATHS = (
     "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
     "/Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge",
@@ -62,17 +72,53 @@ def _with_browser(html: str, out: Path, browser: str) -> None:
         src = Path(tmp) / "report.html"
         src.write_text(html, encoding="utf-8")
         profile = Path(tmp) / "profile"
-        cmd = [browser, "--headless=new", "--disable-gpu", "--no-sandbox",
-               f"--user-data-dir={profile}", "--no-pdf-header-footer",
-               f"--print-to-pdf={out}", src.as_uri()]
-        proc = subprocess.run(cmd, capture_output=True, text=True, timeout=120, check=False)
+        profile.mkdir(parents=True, exist_ok=True)
+        base_flags = [
+            "--disable-gpu",
+            "--no-sandbox",
+            "--use-mock-keychain",
+            "--password-store=basic",
+            "--no-first-run",
+            "--no-default-browser-check",
+            "--disable-extensions",
+            "--disable-background-networking",
+            "--disable-component-update",
+            "--disable-sync",
+            "--disable-default-apps",
+            "--mute-audio",
+            "--hide-scrollbars",
+            "--disable-dev-shm-usage",
+            f"--user-data-dir={profile}",
+            "--no-pdf-header-footer",
+            f"--print-to-pdf={out}",
+            src.as_uri(),
+        ]
+        # First attempt with modern --headless=new mode
+        cmd = [browser, "--headless=new", *base_flags]
+        last_error = ""
+        try:
+            proc = subprocess.run(cmd, capture_output=True, text=True, timeout=60, check=False)
+            last_error = proc.stderr.strip()
+        except subprocess.TimeoutExpired:
+            last_error = "timed out after 60 seconds"
+            proc = None
+
+        # Fallback to legacy --headless if --headless=new timed out or exited with error without output
+        if not out.exists() or out.stat().st_size == 0:
+            cmd_fallback = [browser, "--headless", *base_flags]
+            try:
+                proc = subprocess.run(cmd_fallback, capture_output=True, text=True, timeout=60, check=False)
+                last_error = proc.stderr.strip()
+            except subprocess.TimeoutExpired:
+                last_error = "timed out after 60 seconds"
+
     if not out.exists() or out.stat().st_size == 0:
-        raise PdfError(f"{Path(browser).name} did not produce a PDF: {proc.stderr.strip()[-300:]}")
+        raise PdfError(f"{Path(browser).name} did not produce a PDF: {last_error[-300:]}")
 
 
 def html_to_pdf(html: str, out: Path, engine: str = "auto") -> str:
     """Write a PDF and return the engine used ('weasyprint' or 'browser')."""
-    out = Path(out)
+    out = Path(out).resolve()
     out.parent.mkdir(parents=True, exist_ok=True)
     errors: list[str] = []
     if engine in ("auto", "weasyprint"):
