@@ -1,0 +1,1432 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Developer Proof of Work - MD AL AMIN</title>
+<style>
+:root {
+  --ink: #17202a; --muted: #5d6b79; --line: #dfe5ea; --soft: #f4f7f9;
+  --accent: #0b6e69; --accent-soft: #e3f3f1; --good: #1b7f4c; --warn: #9a6700; --bad: #b3261e;
+}
+@page { size: A4; margin: 16mm 15mm 18mm 15mm;
+  @bottom-left { content: "Developer Proof of Work - MD AL AMIN"; font: 8pt/1 sans-serif; color: #8a97a3; }
+  @bottom-right { content: counter(page) " / " counter(pages); font: 8pt/1 sans-serif; color: #8a97a3; } }
+* { box-sizing: border-box; }
+html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+body { margin: 0; color: var(--ink); background: #fff; font: 9.6pt/1.45 "Inter", "Segoe UI", "Helvetica Neue", Arial, sans-serif; }
+a { color: var(--accent); text-decoration: none; }
+code, .mono { font-family: "SFMono-Regular", Consolas, "DejaVu Sans Mono", monospace; font-size: 8.4pt; }
+h1 { font-size: 24pt; margin: 0 0 2pt; letter-spacing: -0.4pt; }
+h2 { font-size: 13pt; margin: 20pt 0 6pt; padding-bottom: 4pt; border-bottom: 1.5pt solid var(--accent); break-after: avoid; }
+h3 { font-size: 11pt; margin: 0 0 4pt; }
+h4 { font-size: 8.4pt; margin: 10pt 0 3pt; text-transform: uppercase; letter-spacing: .6pt; color: var(--muted); break-after: avoid; }
+p { margin: 0 0 6pt; }
+.muted { color: var(--muted); }
+.small { font-size: 8.4pt; }
+header.top { border-left: 5pt solid var(--accent); padding: 2pt 0 2pt 12pt; margin-bottom: 12pt; }
+header.top .role { font-size: 11pt; color: var(--accent); font-weight: 600; }
+header.top .meta { margin-top: 4pt; color: var(--muted); }
+.stats { display: flex; gap: 8pt; margin: 10pt 0 4pt; }
+.stat { flex: 1; background: var(--soft); border-radius: 5pt; padding: 8pt 8pt 7pt; }
+.stat b { display: block; font-size: 15pt; letter-spacing: -.3pt; }
+.stat span { color: var(--muted); font-size: 8pt; }
+table { width: 100%; border-collapse: collapse; margin: 4pt 0 8pt; }
+th { text-align: left; font-size: 7.8pt; text-transform: uppercase; letter-spacing: .4pt; color: var(--muted);
+     border-bottom: 1pt solid var(--line); padding: 4pt 6pt 4pt 0; }
+td { padding: 4pt 6pt 4pt 0; border-bottom: .5pt solid var(--line); vertical-align: top; }
+th.r, td.r { text-align: right; padding-right: 0; }
+tr { break-inside: avoid; }
+.tag { display: inline-block; padding: 0 5pt; border-radius: 8pt; font-size: 7.6pt; font-weight: 600; }
+.tag.strong { background: #dff3e7; color: var(--good); } .tag.inferred { background: #fbefd2; color: var(--warn); }
+.bar { height: 7pt; background: var(--soft); border-radius: 4pt; overflow: hidden; }
+.bar i { display: block; height: 100%; background: var(--accent); }
+.bars td { border: 0; padding: 2pt 6pt 2pt 0; }
+.cols { display: flex; gap: 16pt; } .cols > div { flex: 1; min-width: 0; }
+.chart { display: flex; align-items: flex-end; gap: 2pt; height: 52pt; border-bottom: 1pt solid var(--line); margin-top: 6pt; }
+.chart i { flex: 1; background: var(--accent); border-radius: 1.5pt 1.5pt 0 0; min-height: 1.5pt; }
+.chart-labels { display: flex; justify-content: space-between; color: var(--muted); font-size: 7.4pt; margin-top: 2pt; }
+.project { break-inside: avoid-page; border: 1pt solid var(--line); border-radius: 6pt; padding: 10pt 12pt 8pt; margin: 0 0 10pt; }
+.project .purpose { color: var(--muted); font-style: italic; }
+.kv td:first-child { color: var(--muted); width: 32%; white-space: nowrap; }
+.kv td { border-bottom: .5pt solid var(--line); }
+.flags span { display: inline-block; margin-right: 8pt; font-size: 8.4pt; }
+.yes { color: var(--good); } .no { color: #a3adb7; }
+ul { margin: 2pt 0 6pt; padding-left: 14pt; } li { margin: 1pt 0; }
+.note { background: var(--accent-soft); border-radius: 5pt; padding: 7pt 10pt; font-size: 8.6pt; }
+.ai { border-left: 3pt solid #7a4fd0; background: #f3eefc; padding: 7pt 10pt; border-radius: 0 5pt 5pt 0; margin: 6pt 0; font-size: 9pt; }
+.ai small { color: #6b4aa3; display: block; margin-bottom: 2pt; font-weight: 600; }
+.verify { margin-top: 14pt; padding: 8pt 10pt; border: 1pt dashed var(--line); border-radius: 5pt; font-size: 8pt; color: var(--muted); word-break: break-all; }
+footer.end { margin-top: 18pt; color: var(--muted); font-size: 8pt; border-top: 1pt solid var(--line); padding-top: 6pt; }
+.summary-grid { display: flex; gap: 18pt; } .summary-grid > div { flex: 1; min-width: 0; }
+.pagebreak { break-before: page; }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <h1>MD AL AMIN</h1>
+<div class="role">Web / Mobile / Systems</div>  <div class="meta">GitHub: <a href="https://github.com/Saqlain-mushtaq-alamin">github.com/Saqlain-mushtaq-alamin</a>
+</div>
+  <div class="meta small">Developer proof of work &middot; generated 2026-10-04 by gitproof v0.1.0</div>
+</header>
+
+<div class="stats">
+  <div class="stat"><b>2,632</b><span>commits</span></div>
+  <div class="stat"><b>26</b><span>projects with commits</span></div>
+  <div class="stat"><b>236,577</b><span>lines still in code</span></div>
+  <div class="stat"><b>7</b><span>languages</span></div>
+  <div class="stat"><b>3</b><span>merged pull requests</span></div>
+  <div class="stat"><b>1.7</b><span>years of activity</span></div>
+</div>
+
+<h2>1. Professional summary</h2>
+<p>MD AL AMIN has 1.7 years of visible GitHub activity (2025-2026), with 2,632 attributable commits across 26 repositories and 170 active days. Work is concentrated in Web, Mobile, Systems (inferred from the technologies used), mainly in Python, TypeScript, CSS. About 236,577 lines written by the developer are still present in the current state of the analyzed repositories. The most substantial project by evidence of work is eco-dms: No description available. 21 projects received commits in the last 180 days.</p>
+
+
+<h2>2. Technical skills</h2>
+<p class="small muted"><b>strong</b> = the developer changed files of that kind. <b>inferred</b> = it is a dependency in a manifest the developer edited (first-seen dates are approximate).</p>
+<table>
+  <tr><th>Skill</th><th>Category</th><th>First seen</th><th class="r">Repos</th><th class="r">Commits</th><th>Confidence</th><th>Evidence</th></tr>
+  <tr><td><b>Python</b></td><td>Language</td><td>Sep 2025</td><td class="r">15</td><td class="r">1,078</td>
+      <td><span class="tag strong">strong</span></td>
+      <td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/eco-dms/commit/58319538353f9428301cef3e33aa3283af95131c">5831953</a> <a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/eco-dms/commit/3ef3d6501941933b831a26443be68fb5fe5af727">3ef3d65</a> </td></tr>
+  <tr><td><b>TypeScript</b></td><td>Language</td><td>Nov 2025</td><td class="r">6</td><td class="r">804</td>
+      <td><span class="tag strong">strong</span></td>
+      <td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/eco-dms/commit/7d1adb5416e45a7c6e4f2193335af4b3ec9fc15a">7d1adb5</a> <a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/eco-dms/commit/58319538353f9428301cef3e33aa3283af95131c">5831953</a> </td></tr>
+  <tr><td><b>CSS</b></td><td>Language</td><td>Jan 2025</td><td class="r">9</td><td class="r">126</td>
+      <td><span class="tag strong">strong</span></td>
+      <td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/eco-dms/commit/58319538353f9428301cef3e33aa3283af95131c">5831953</a> <a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/eco-dms/commit/06e17ce72073bd929afa7c3d14c7b8273e6ca9ba">06e17ce</a> </td></tr>
+  <tr><td><b>C++</b></td><td>Language</td><td>Sep 2025</td><td class="r">4</td><td class="r">50</td>
+      <td><span class="tag strong">strong</span></td>
+      <td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/Civitas-X/commit/4c503696cc973456741d3c561521c770db6698ab">4c50369</a> <a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/Civitas-X/commit/26eb8bd56384a07f2406fa661fcea31e42db46f8">26eb8bd</a> </td></tr>
+  <tr><td><b>HTML</b></td><td>Language</td><td>Jan 2025</td><td class="r">10</td><td class="r">50</td>
+      <td><span class="tag strong">strong</span></td>
+      <td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/eco-dms/commit/58319538353f9428301cef3e33aa3283af95131c">5831953</a> <a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/eco-dms/commit/d0c333a5dabf750955732577fef490c88fba64e3">d0c333a</a> </td></tr>
+  <tr><td><b>React</b></td><td>Framework</td><td>Nov 2025</td><td class="r">6</td><td class="r">47</td>
+      <td><span class="tag inferred">inferred</span></td>
+      <td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/eco-dms/commit/7d1adb5416e45a7c6e4f2193335af4b3ec9fc15a">7d1adb5</a> <a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/eco-dms/commit/58319538353f9428301cef3e33aa3283af95131c">5831953</a> </td></tr>
+  <tr><td><b>React Native</b></td><td>Framework</td><td>Nov 2025</td><td class="r">2</td><td class="r">39</td>
+      <td><span class="tag inferred">inferred</span></td>
+      <td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/eco-dms/commit/7d1adb5416e45a7c6e4f2193335af4b3ec9fc15a">7d1adb5</a> <a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/eco-dms/commit/58319538353f9428301cef3e33aa3283af95131c">5831953</a> </td></tr>
+  <tr><td><b>Expo</b></td><td>Framework</td><td>Nov 2025</td><td class="r">2</td><td class="r">38</td>
+      <td><span class="tag inferred">inferred</span></td>
+      <td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/eco-dms/commit/7d1adb5416e45a7c6e4f2193335af4b3ec9fc15a">7d1adb5</a> <a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/eco-dms/commit/58319538353f9428301cef3e33aa3283af95131c">5831953</a> </td></tr>
+  <tr><td><b>JavaScript</b></td><td>Language</td><td>Nov 2025</td><td class="r">5</td><td class="r">35</td>
+      <td><span class="tag strong">strong</span></td>
+      <td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/eco-dms/commit/7d1adb5416e45a7c6e4f2193335af4b3ec9fc15a">7d1adb5</a> <a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/eco-dms/commit/58319538353f9428301cef3e33aa3283af95131c">5831953</a> </td></tr>
+  <tr><td><b>Make</b></td><td>Tool/Infra</td><td>Nov 2025</td><td class="r">5</td><td class="r">27</td>
+      <td><span class="tag strong">strong</span></td>
+      <td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/eco-dms/commit/e109165e930aa3dfa28ff1bf5df95e16089cfefc">e109165</a> <a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/eco-dms/commit/df2b7607c2f11c33a8ab0a40087cc452c373f3a9">df2b760</a> </td></tr>
+  <tr><td><b>C</b></td><td>Language</td><td>Sep 2025</td><td class="r">3</td><td class="r">25</td>
+      <td><span class="tag strong">strong</span></td>
+      <td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/Civitas-X/commit/4c503696cc973456741d3c561521c770db6698ab">4c50369</a> <a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/Civitas-X/commit/26eb8bd56384a07f2406fa661fcea31e42db46f8">26eb8bd</a> </td></tr>
+  <tr><td><b>NumPy</b></td><td>ML/AI</td><td>Nov 2025</td><td class="r">4</td><td class="r">22</td>
+      <td><span class="tag inferred">inferred</span></td>
+      <td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/eco-dms/commit/58319538353f9428301cef3e33aa3283af95131c">5831953</a> <a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/eco-dms/commit/1197cd6157c2567c8ab63e2f72d2354dade70820">1197cd6</a> </td></tr>
+  <tr><td><b>Pydantic</b></td><td>Library</td><td>Nov 2025</td><td class="r">5</td><td class="r">21</td>
+      <td><span class="tag inferred">inferred</span></td>
+      <td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/eco-dms/commit/58319538353f9428301cef3e33aa3283af95131c">5831953</a> <a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/eco-dms/commit/1197cd6157c2567c8ab63e2f72d2354dade70820">1197cd6</a> </td></tr>
+  <tr><td><b>FastAPI</b></td><td>Framework</td><td>Nov 2025</td><td class="r">4</td><td class="r">20</td>
+      <td><span class="tag inferred">inferred</span></td>
+      <td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/eco-dms/commit/58319538353f9428301cef3e33aa3283af95131c">5831953</a> <a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/eco-dms/commit/1197cd6157c2567c8ab63e2f72d2354dade70820">1197cd6</a> </td></tr>
+  <tr><td><b>Tailwind CSS</b></td><td>Framework</td><td>Nov 2025</td><td class="r">3</td><td class="r">20</td>
+      <td><span class="tag inferred">inferred</span></td>
+      <td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/eco-dms/commit/7d1adb5416e45a7c6e4f2193335af4b3ec9fc15a">7d1adb5</a> <a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/eco-dms/commit/58319538353f9428301cef3e33aa3283af95131c">5831953</a> </td></tr>
+  <tr><td><b>pytest</b></td><td>Testing</td><td>Nov 2025</td><td class="r">6</td><td class="r">20</td>
+      <td><span class="tag inferred">inferred</span></td>
+      <td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/eco-dms/commit/e109165e930aa3dfa28ff1bf5df95e16089cfefc">e109165</a> <a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/eco-dms/commit/1197cd6157c2567c8ab63e2f72d2354dade70820">1197cd6</a> </td></tr>
+  <tr><td><b>PyTorch</b></td><td>ML/AI</td><td>Nov 2025</td><td class="r">3</td><td class="r">17</td>
+      <td><span class="tag inferred">inferred</span></td>
+      <td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/eco-dms/commit/58319538353f9428301cef3e33aa3283af95131c">5831953</a> <a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/eco-dms/commit/1197cd6157c2567c8ab63e2f72d2354dade70820">1197cd6</a> </td></tr>
+  <tr><td><b>Jest</b></td><td>Testing</td><td>Jun 2026</td><td class="r">2</td><td class="r">16</td>
+      <td><span class="tag inferred">inferred</span></td>
+      <td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/StudyMap/commit/a1f8b12ca467b8bdf01492b4b2be0d89384984e1">a1f8b12</a> <a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/StudyMap/commit/a68566575333d26ae6bd0d5c851aaf5ccb0bdb6e">a685665</a> </td></tr>
+  <tr><td><b>Rust</b></td><td>Language</td><td>Jul 2026</td><td class="r">1</td><td class="r">16</td>
+      <td><span class="tag strong">strong</span></td>
+      <td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/Poise-/commit/18120ea45ac1c1e2c3dcf7759509c9a5f63f180f">18120ea</a> <a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/Poise-/commit/d646d0850430a41e98982e29e0b23633a358fb92">d646d08</a> </td></tr>
+  <tr><td><b>GitHub Actions</b></td><td>Tool/Infra</td><td>Jul 2026</td><td class="r">6</td><td class="r">15</td>
+      <td><span class="tag strong">strong</span></td>
+      <td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/eco-dms/commit/1384d512745ab434dc86c465dcecf790f6a2b9cb">1384d51</a> <a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/eco-dms/commit/7f31d7b47e79d7730f8ef4da1153ee39b07caf41">7f31d7b</a> </td></tr>
+  <tr><td><b>Vite</b></td><td>Tool</td><td>Nov 2025</td><td class="r">5</td><td class="r">13</td>
+      <td><span class="tag inferred">inferred</span></td>
+      <td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/eco-dms/commit/7d1adb5416e45a7c6e4f2193335af4b3ec9fc15a">7d1adb5</a> <a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/eco-dms/commit/58319538353f9428301cef3e33aa3283af95131c">5831953</a> </td></tr>
+  <tr><td><b>PowerShell</b></td><td>Language</td><td>Nov 2025</td><td class="r">2</td><td class="r">12</td>
+      <td><span class="tag strong">strong</span></td>
+      <td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/eco-dms/commit/cf2e410110683c07e9c8f0028c89faf83f7c75b8">cf2e410</a> <a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/eco-dms/commit/b38789244824ce138c3131adf69fce744fb73f51">b387892</a> </td></tr>
+  <tr><td><b>Vitest</b></td><td>Testing</td><td>Nov 2025</td><td class="r">4</td><td class="r">11</td>
+      <td><span class="tag inferred">inferred</span></td>
+      <td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/eco-dms/commit/7d1adb5416e45a7c6e4f2193335af4b3ec9fc15a">7d1adb5</a> <a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/eco-dms/commit/58319538353f9428301cef3e33aa3283af95131c">5831953</a> </td></tr>
+  <tr><td><b>Solidity</b></td><td>Language</td><td>Nov 2025</td><td class="r">1</td><td class="r">10</td>
+      <td><span class="tag strong">strong</span></td>
+      <td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/eco-dms/commit/e109165e930aa3dfa28ff1bf5df95e16089cfefc">e109165</a> <a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/eco-dms/commit/f4e40ee9bc2be13be4fe9361d924b93aa236d35d">f4e40ee</a> </td></tr>
+  <tr><td><b>Docker</b></td><td>Tool/Infra</td><td>Nov 2025</td><td class="r">4</td><td class="r">9</td>
+      <td><span class="tag strong">strong</span></td>
+      <td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/eco-dms/commit/e109165e930aa3dfa28ff1bf5df95e16089cfefc">e109165</a> <a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/eco-dms/commit/0e041281f1e9197f19eadff6ae63fb79feb7bd59">0e04128</a> </td></tr>
+</table>
+
+<h2>3. GitHub activity</h2>
+<table class="kv">
+  <tr><td>Repositories</td><td>32 (30 original, 2 forks; 26 with attributable commits)</td></tr>
+  <tr><td>Commits</td><td>2,632 on 170 active days; longest streak 21 days</td></tr>
+  <tr><td>Lines changed</td><td>427,608 (+362,404 / -65,204, noise filtered); 236,577 still present in current code</td></tr>
+  <tr><td>Pull requests</td><td>4 (3 merged, 0 merged into other people's repositories)</td></tr>
+  <tr><td>Issues / reviews</td><td>0 issues opened; 0 pull requests reviewed</td></tr>
+  <tr><td>Active period</td><td>2025-01-07 to 2026-10-03 (1.7 years); 21 projects active in the last 180 days</td></tr>
+</table>
+
+<h2>4. Project portfolio</h2>
+<table>
+  <tr><th>Project</th><th>Purpose</th><th>Stack</th><th>Period</th><th class="r">Commits</th><th class="r">Lines</th><th class="r">Quality</th></tr>
+  <tr><td><a href="https://github.com/Saqlain-mushtaq-alamin/eco-dms"><b>eco-dms</b></a></td><td>No description available.</td><td>TypeScript, React, React Native, Expo</td><td>Nov 2025 - Sep 2026</td><td class="r">438</td><td class="r">69,249</td><td class="r">55/100</td></tr>
+  <tr><td><a href="https://github.com/Saqlain-mushtaq-alamin/Poise-"><b>Poise-</b></a></td><td>Unlike proprietary web platforms that charge monthly subscriptions or cap session usage, Poise runs local AI inference directly on your GPU/CPU via Ollama or supports Bring-Your-Own-Key (BYOK) cloud endpoints (OpenAI, Anthropic, Gemini, Groq, DeepSeek).</td><td>Python, Tauri, FastAPI, NumPy</td><td>Jul 2026 - Sep 2026</td><td class="r">673</td><td class="r">40,541</td><td class="r">80/100</td></tr>
+  <tr><td><a href="https://github.com/Saqlain-mushtaq-alamin/ARIA"><b>ARIA</b></a></td><td>Whether you need to automate multi-step system workflows, enforce deep-work focus sessions, research academic papers, manage daily schedules, or analyze your cognitive dynamics while typing, ARIA handles it all locally without transmitting your personal data to external clouds.</td><td>Python</td><td>Apr 2026 - Jul 2026</td><td class="r">126</td><td class="r">24,370</td><td class="r">65/100</td></tr>
+  <tr><td><a href="https://github.com/Saqlain-mushtaq-alamin/sentry-"><b>sentry-</b></a></td><td>Ensure you have Node.js (v18 or higher) and npm installed on your machine.</td><td>TypeScript, Electron, React, Vitest</td><td>Aug 2026 - Sep 2026</td><td class="r">162</td><td class="r">16,849</td><td class="r">65/100</td></tr>
+  <tr><td><a href="https://github.com/Saqlain-mushtaq-alamin/VeritasCore"><b>VeritasCore</b></a></td><td>Unlike black-box fact-checkers, every verdict in VeritasCore traces to concrete evidence: the NLI entailment probability, the retrieved passage, or the consistency distribution.</td><td>Python, Gradio, FastAPI, Hugging Face Transformers</td><td>Jul 2026 - Sep 2026</td><td class="r">135</td><td class="r">14,621</td><td class="r">90/100</td></tr>
+  <tr><td><a href="https://github.com/Saqlain-mushtaq-alamin/NIDS"><b>NIDS</b></a></td><td>No description available.</td><td>Python, LightGBM, NumPy, PyTorch</td><td>Sep 2026 - Oct 2026</td><td class="r">96</td><td class="r">11,884</td><td class="r">30/100</td></tr>
+  <tr><td><a href="https://github.com/Saqlain-mushtaq-alamin/StudyMap"><b>StudyMap</b></a></td><td>A science-backed study timer that builds a personalised daily plan based on your exams, difficulty levels, and readiness — so you always know exactly what to study next.</td><td>TypeScript, Expo, Jest, React</td><td>Jun 2026 - Aug 2026</td><td class="r">86</td><td class="r">10,417</td><td class="r">60/100</td></tr>
+  <tr><td><a href="https://github.com/Saqlain-mushtaq-alamin/portfolio-site"><b>portfolio-site</b></a></td><td>No description available.</td><td>HTML</td><td>Sep 2025 - Jun 2026</td><td class="r">38</td><td class="r">9,233</td><td class="r">25/100</td></tr>
+  <tr><td><a href="https://github.com/Saqlain-mushtaq-alamin/UA-HCMARL"><b>UA-HCMARL</b></a></td><td>No description available.</td><td>Python</td><td>Aug 2026 - Sep 2026</td><td class="r">127</td><td class="r">8,279</td><td class="r">25/100</td></tr>
+  <tr><td><a href="https://github.com/Saqlain-mushtaq-alamin/D-T_Pool"><b>D-T_Pool</b></a></td><td>Dhaka Tesla Pool is a hyper-localized electric ride-pooling platform designed specifically for Dhaka&#39;s dense urban commuting corridors.</td><td>TypeScript, Express, Jest, React</td><td>Sep 2026 - Sep 2026</td><td class="r">73</td><td class="r">6,845</td><td class="r">55/100</td></tr>
+  <tr><td><a href="https://github.com/Saqlain-mushtaq-alamin/Finanalyzer-"><b>Finanalyzer-</b></a></td><td>This project was built to help automate and visualize basic financial tracking — perfect for students, small businesses, or anyone learning the accounting process!</td><td>Java</td><td>May 2025 - May 2025</td><td class="r">13</td><td class="r">5,786</td><td class="r">25/100</td></tr>
+  <tr><td><a href="https://github.com/Saqlain-mushtaq-alamin/Civitas-X"><b>Civitas-X</b></a></td><td>Autonomous City Simulation in 2D using OpenGL + FreeGLUT.</td><td>C</td><td>Mar 2026 - Apr 2026</td><td class="r">40</td><td class="r">4,645</td><td class="r">40/100</td></tr>
+  <tr><td><a href="https://github.com/Saqlain-mushtaq-alamin/RepoBrief"><b>RepoBrief</b></a></td><td>Installation • Quick Start • Chat Mode • Configuration • How It Works</td><td>Python, Anthropic API, OpenAI API, Rich</td><td>Aug 2026 - Sep 2026</td><td class="r">71</td><td class="r">4,049</td><td class="r">85/100</td></tr>
+  <tr><td><a href="https://github.com/Saqlain-mushtaq-alamin/ByteSpace-"><b>ByteSpace-</b></a></td><td>Featuring immersive 3D glossy geometric visuals, Persian Blue and Electric Lime design tokens, interactive course players, multi-faceted catalog filtering, and split-screen authentication experiences.</td><td>TypeScript, React, Tailwind CSS</td><td>Sep 2026 - Oct 2026</td><td class="r">166</td><td class="r">3,298</td><td class="r">30/100</td></tr>
+  <tr><td><a href="https://github.com/Saqlain-mushtaq-alamin/envobyte-monica-favorites"><b>envobyte-monica-favorites</b></a></td><td>1. Overview 2. Project Structure 3. Setup Instructions 4. Running the Server 5. API Reference 6. Running Tests 7. Implementation Approach 8. Assumptions 9. Limitations &amp; Trade-offs</td><td>Python, FastAPI, Pydantic, SQLAlchemy</td><td>Jul 2026 - Jul 2026</td><td class="r">7</td><td class="r">1,847</td><td class="r">45/100</td></tr>
+  <tr><td><a href="https://github.com/Saqlain-mushtaq-alamin/NearShare"><b>NearShare</b></a></td><td>A file-transfer app that moves files phone-to-phone (and phone-to-PC) with no internet, no account, no ads, and no cloud servers.</td><td>C++, Dio, Flutter, Riverpod</td><td>Sep 2026 - Sep 2026</td><td class="r">163</td><td class="r">889</td><td class="r">55/100</td></tr>
+  <tr><td><a href="https://github.com/Saqlain-mushtaq-alamin/pptx2pdf_app"><b>pptx2pdf_app</b></a></td><td>PPTX → PDF Drag-and-Drop Converter (runs locally on your Windows PC)</td><td>HTML</td><td>Jun 2026 - Jul 2026</td><td class="r">5</td><td class="r">1,064</td><td class="r">15/100</td></tr>
+  <tr><td><a href="https://github.com/Saqlain-mushtaq-alamin/driftlock"><b>driftlock</b></a></td><td>memory protection</td><td>Python</td><td>May 2026 - May 2026</td><td class="r">11</td><td class="r">878</td><td class="r">10/100</td></tr>
+  <tr><td><a href="https://github.com/Saqlain-mushtaq-alamin/britannica"><b>britannica</b></a></td><td>No description available.</td><td>HTML</td><td>Jan 2025 - Jan 2025</td><td class="r">1</td><td class="r">595</td><td class="r">0/100</td></tr>
+  <tr><td><a href="https://github.com/Saqlain-mushtaq-alamin/Computer_Graphics_Lab"><b>Computer_Graphics_Lab</b></a></td><td>This repository holds all lab programs written in C/C++ using the graphics.h library.</td><td>C++</td><td>Mar 2026 - Apr 2026</td><td class="r">10</td><td class="r">549</td><td class="r">20/100</td></tr>
+  <tr><td><a href="https://github.com/Saqlain-mushtaq-alamin/DRIFT-X"><b>DRIFT-X</b></a></td><td>No description available.</td><td>n/a</td><td>Aug 2026 - Sep 2026</td><td class="r">104</td><td class="r">0</td><td class="r">10/100</td></tr>
+  <tr><td><a href="https://github.com/Saqlain-mushtaq-alamin/snakegame"><b>snakegame</b></a></td><td>No description available.</td><td>Java</td><td>Jan 2025 - May 2025</td><td class="r">5</td><td class="r">362</td><td class="r">10/100</td></tr>
+  <tr><td><a href="https://github.com/Saqlain-mushtaq-alamin/wifi-strength-scanner"><b>wifi-strength-scanner</b></a></td><td>A comprehensive tool for scanning and visualizing WiFi signal strength with heatmap generation.</td><td>Python</td><td>Dec 2025 - Dec 2025</td><td class="r">71</td><td class="r">0</td><td class="r">45/100</td></tr>
+  <tr><td><a href="https://github.com/Saqlain-mushtaq-alamin/Finura-v1.2"><b>Finura-v1.2</b></a></td><td>AI-Powered Personal Finance Assistant</td><td>Dart, Firebase, Flutter</td><td>Sep 2025 - Jan 2026</td><td class="r">5</td><td class="r">327</td><td class="r">45/100</td></tr>
+  <tr><td><a href="https://github.com/Saqlain-mushtaq-alamin/Saqlain-mushtaq-alamin"><b>Saqlain-mushtaq-alamin</b></a></td><td>⚡ CSE Student · AI Explorer · Software Engineer</td><td>n/a</td><td>Jan 2026 - May 2026</td><td class="r">5</td><td class="r">0</td><td class="r">15/100</td></tr>
+  <tr><td><a href="https://github.com/Saqlain-mushtaq-alamin/SC-RAG"><b>SC-RAG</b></a></td><td>This project implements a Self-Correcting Retrieval-Augmented Generation (RAG) system utilizing a LangGraph state machine to dynamically grade retrieved document relevance, verify answer groundedness, evaluate usefulness, and recursively correct the query or generate a revised an...</td><td>Python, FAISS, LangChain, Pydantic</td><td>Jun 2026 - Jun 2026</td><td class="r">1</td><td class="r">0</td><td class="r">40/100</td></tr>
+</table>
+<p class="small muted">Lines = lines still present in the code when measurable, otherwise lines added. Quality is a 0-100 score from tests, CI, README, license, releases and tooling.</p>
+
+<h2 class="pagebreak">5. Project-by-project analysis</h2>
+<section class="project">
+  <h3><a href="https://github.com/Saqlain-mushtaq-alamin/eco-dms">eco-dms</a></h3>
+  <p class="purpose">No description available.</p>
+  <div class="cols">
+    <div>
+      <table class="kv">
+        <tr><td>Languages</td><td>TypeScript 54%, Python 31%, CSS 11%, Solidity 2%, PowerShell 1%</td></tr>
+        <tr><td>Frameworks / tools</td><td>React, React Native, Expo, Make, NumPy, PyTorch, FastAPI, Pydantic, Tailwind CSS, Vite, Vitest, Docker, pytest, GitHub Actions, scikit-learn, OpenCV</td></tr>
+        <tr><td>Period</td><td>Nov 2025 to Sep 2026 (9.5 months)</td></tr>
+        <tr><td>Quality</td><td>55/100 &middot; README 0/5, Tests, CI, License, Docker, Docs dir, Lint config</td></tr>
+      </table>
+    </div>
+    <div>
+      <table class="kv">
+        <tr><td>Your commits</td><td>438 of 438 (100%)</td></tr>
+        <tr><td>Files modified</td><td>566</td></tr>
+        <tr><td>Additions / deletions</td><td>+130,809 / -38,002</td></tr>
+        <tr><td>Surviving lines</td><td>69,249 of 69,249 lines (100%)</td></tr>
+      </table>
+    </div>
+  </div>
+  <h4>Major development areas</h4>
+  <table class="bars">
+    <tr><td style="width:24%">UI</td><td><div class="bar"><i style="width:33.7%"></i></div></td><td class="r small muted" style="width:22%">34% &middot; 56,922 lines</td></tr>
+    <tr><td style="width:24%">Documentation</td><td><div class="bar"><i style="width:23.8%"></i></div></td><td class="r small muted" style="width:22%">24% &middot; 40,141 lines</td></tr>
+    <tr><td style="width:24%">Core Logic</td><td><div class="bar"><i style="width:13.3%"></i></div></td><td class="r small muted" style="width:22%">13% &middot; 22,490 lines</td></tr>
+    <tr><td style="width:24%">Backend/API</td><td><div class="bar"><i style="width:12.0%"></i></div></td><td class="r small muted" style="width:22%">12% &middot; 20,257 lines</td></tr>
+    <tr><td style="width:24%">ML/Data</td><td><div class="bar"><i style="width:7.1%"></i></div></td><td class="r small muted" style="width:22%">7% &middot; 12,063 lines</td></tr>
+    <tr><td style="width:24%">Testing</td><td><div class="bar"><i style="width:3.7%"></i></div></td><td class="r small muted" style="width:22%">4% &middot; 6,315 lines</td></tr>
+  </table>
+  <p class="small muted">Commit types: feature 360, fix 26, test 19, refactor 17, build 5, docs 4, perf 3, chore 2, init 1, ci 1</p>
+  <h4>Development timeline</h4>
+  <ul><li><b>Phase 1</b> (2025-11-18 to 2025-12-04, 33 commits): Project setup &amp; foundations - Backend/API, Security</li><li><b>Phase 2</b> (2025-12-27 to 2026-01-09, 26 commits): Feature development - Documentation, Backend/API</li><li><b>Phase 3</b> (2026-02-11 to 2026-03-10, 93 commits): Feature development - UI, Documentation</li><li><b>Phase 4</b> (2026-04-10 to 2026-04-27, 15 commits): Feature development - Documentation, ML/Data</li><li><b>Phase 5</b> (2026-07-18 to 2026-08-13, 238 commits): Feature development - UI, Core Logic</li><li><b>Phase 6</b> (2026-09-03 to 2026-09-04, 33 commits): Feature development - Testing, Backend/API</li></ul>
+  <h4>Evidence</h4>
+  <div class="flags"><span class="yes">&#10003; Commits</span><span class="no">&#10007; Pull requests</span><span class="no">&#10007; Releases</span><span class="no">&#10007; Issues</span><span class="yes">&#10003; Code changes</span><span class="yes">&#10003; History</span></div>
+  <table>
+    <tr><th>Commit</th><th>Date</th><th>Why it matters</th><th>Message</th></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/eco-dms/commit/5065f581ea27724f275dcdc7e24f10fbd568d0df">5065f58</a></td><td>2025-11-18</td><td>First commit</td><td>Initial commit</td></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/eco-dms/commit/f4e40ee9bc2be13be4fe9361d924b93aa236d35d">f4e40ee</a></td><td>2026-02-11</td><td>Large change</td><td>feat: add Verification contract factory and index export</td></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/eco-dms/commit/81d9a09ca12f3a98efa5a01cf5e9bfceb40da8db">81d9a09</a></td><td>2026-07-19</td><td>Large change</td><td>feat: add RewardToken and EcoCredential contracts with corresponding Typechain bindings</td></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/eco-dms/commit/4c13c48dbd48ba6571a1218145f16e55fc5c0876">4c13c48</a></td><td>2026-08-07</td><td>Large change</td><td>feat: introduce global styles with custom glassmorphism and theme-aware color variables</td></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/eco-dms/commit/7f5b9500700d676237bdc7ac41a868b846cf5500">7f5b950</a></td><td>2026-08-07</td><td>Large change</td><td>feat: add global styles with brand typography, custom glassmorphism utilities, and responsive dark theme support</td></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/eco-dms/commit/5cfbc4b0ecaa26e3bddf080c97d0ad1eb4ab3884">5cfbc4b</a></td><td>2026-09-04</td><td>Latest commit</td><td>test: add integration tests for phase 07 operational infrastructure</td></tr>
+  </table>
+  <p class="small"><a href="https://github.com/Saqlain-mushtaq-alamin/eco-dms/commits?author=Saqlain-mushtaq-alamin">All commits by Saqlain-mushtaq-alamin in this repository</a></p>
+</section>
+<section class="project">
+  <h3><a href="https://github.com/Saqlain-mushtaq-alamin/Poise-">Poise-</a></h3>
+  <p class="purpose">Unlike proprietary web platforms that charge monthly subscriptions or cap session usage, Poise runs local AI inference directly on your GPU/CPU via Ollama or supports Bring-Your-Own-Key (BYOK) cloud endpoints (OpenAI, Anthropic, Gemini, Groq, DeepSeek).</p>
+  <div class="cols">
+    <div>
+      <table class="kv">
+        <tr><td>Languages</td><td>Python 53%, TypeScript 38%, CSS 7%, Rust 2%, JavaScript 0%</td></tr>
+        <tr><td>Frameworks / tools</td><td>Tauri, FastAPI, NumPy, Pydantic, SQLAlchemy, pytest, GitHub Actions, React, Serde, Tokio, Vite, Vitest</td></tr>
+        <tr><td>Period</td><td>Jul 2026 to Sep 2026 (2.1 months)</td></tr>
+        <tr><td>Quality</td><td>80/100 &middot; README 4/5, Tests, CI, License, Docs dir, Lint config</td></tr>
+      </table>
+    </div>
+    <div>
+      <table class="kv">
+        <tr><td>Your commits</td><td>673 of 673 (100%)</td></tr>
+        <tr><td>Files modified</td><td>388</td></tr>
+        <tr><td>Additions / deletions</td><td>+47,294 / -2,735</td></tr>
+        <tr><td>Surviving lines</td><td>40,541 of 40,541 lines (100%)</td></tr>
+      </table>
+    </div>
+  </div>
+  <h4>Major development areas</h4>
+  <table class="bars">
+    <tr><td style="width:24%">Backend/API</td><td><div class="bar"><i style="width:37.7%"></i></div></td><td class="r small muted" style="width:22%">38% &middot; 18,875 lines</td></tr>
+    <tr><td style="width:24%">UI</td><td><div class="bar"><i style="width:31.3%"></i></div></td><td class="r small muted" style="width:22%">31% &middot; 15,677 lines</td></tr>
+    <tr><td style="width:24%">Testing</td><td><div class="bar"><i style="width:16.8%"></i></div></td><td class="r small muted" style="width:22%">17% &middot; 8,413 lines</td></tr>
+    <tr><td style="width:24%">Documentation</td><td><div class="bar"><i style="width:3.8%"></i></div></td><td class="r small muted" style="width:22%">4% &middot; 1,917 lines</td></tr>
+    <tr><td style="width:24%">ML/Data</td><td><div class="bar"><i style="width:2.8%"></i></div></td><td class="r small muted" style="width:22%">3% &middot; 1,419 lines</td></tr>
+    <tr><td style="width:24%">Database</td><td><div class="bar"><i style="width:2.0%"></i></div></td><td class="r small muted" style="width:22%">2% &middot; 979 lines</td></tr>
+  </table>
+  <p class="small muted">Commit types: feature 379, test 121, fix 61, docs 40, build 37, style 12, chore 11, refactor 6, ci 3, perf 3</p>
+  <h4>Development timeline</h4>
+  <ul><li><b>Phase 1</b> (2026-07-16 to 2026-08-17, 526 commits): Feature development - Backend/API, UI</li><li><b>Phase 2</b> (2026-09-05 to 2026-09-20, 147 commits): Stabilization &amp; refactoring - UI, Backend/API</li></ul>
+  <h4>Evidence</h4>
+  <div class="flags"><span class="yes">&#10003; Commits</span><span class="no">&#10007; Pull requests</span><span class="no">&#10007; Releases</span><span class="no">&#10007; Issues</span><span class="yes">&#10003; Code changes</span><span class="yes">&#10003; History</span></div>
+  <table>
+    <tr><th>Commit</th><th>Date</th><th>Why it matters</th><th>Message</th></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/Poise-/commit/fc196f08bf0de6279383a581aa318f07b60bdef0">fc196f0</a></td><td>2026-07-16</td><td>First commit</td><td>Initial commit</td></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/Poise-/commit/9b40c562a7d578d702434d1ee38e27df971a8631">9b40c56</a></td><td>2026-07-21</td><td>Large change</td><td>feat(api): implement interview orchestration endpoints</td></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/Poise-/commit/ef5858961c7ce4a99b402f4798300010924c696c">ef58589</a></td><td>2026-07-27</td><td>Large change</td><td>feat(ielts): implement dynamic topic generation</td></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/Poise-/commit/6cdaf222d36b9675b8aea769004924bde7980c8a">6cdaf22</a></td><td>2026-08-04</td><td>Large change</td><td>feat(interview): implement immersive video-call interview room</td></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/Poise-/commit/0d9265764eddbb0fc105adede31fa62642dab6fc">0d92657</a></td><td>2026-09-15</td><td>Large change</td><td>feat: implement IELTS speaking session page and associated styles</td></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/Poise-/commit/b524b61fc39a0d418af23e0ccd5fb8c6b7fdcb46">b524b61</a></td><td>2026-09-20</td><td>Latest commit</td><td>fix(tauri): disable code signing when no certificate is provided in CI</td></tr>
+  </table>
+  <p class="small"><a href="https://github.com/Saqlain-mushtaq-alamin/Poise-/commits?author=Saqlain-mushtaq-alamin">All commits by Saqlain-mushtaq-alamin in this repository</a></p>
+</section>
+<section class="project">
+  <h3><a href="https://github.com/Saqlain-mushtaq-alamin/ARIA">ARIA</a></h3>
+  <p class="purpose">Whether you need to automate multi-step system workflows, enforce deep-work focus sessions, research academic papers, manage daily schedules, or analyze your cognitive dynamics while typing, ARIA handles it all locally without transmitting your personal data to external clouds.</p>
+  <div class="cols">
+    <div>
+      <table class="kv">
+        <tr><td>Languages</td><td>Python 100%</td></tr>
+        <tr><td>Frameworks / tools</td><td>none detected</td></tr>
+        <tr><td>Period</td><td>Apr 2026 to Jul 2026 (2.9 months)</td></tr>
+        <tr><td>Quality</td><td>65/100 &middot; README 5/5, Tests, License, Docs dir</td></tr>
+      </table>
+    </div>
+    <div>
+      <table class="kv">
+        <tr><td>Your commits</td><td>126 of 126 (100%)</td></tr>
+        <tr><td>Files modified</td><td>315</td></tr>
+        <tr><td>Additions / deletions</td><td>+32,266 / -5,089</td></tr>
+        <tr><td>Surviving lines</td><td>24,370 of 24,370 lines (100%)</td></tr>
+      </table>
+    </div>
+  </div>
+  <h4>Major development areas</h4>
+  <table class="bars">
+    <tr><td style="width:24%">Core Logic</td><td><div class="bar"><i style="width:44.3%"></i></div></td><td class="r small muted" style="width:22%">44% &middot; 16,558 lines</td></tr>
+    <tr><td style="width:24%">UI</td><td><div class="bar"><i style="width:17.4%"></i></div></td><td class="r small muted" style="width:22%">17% &middot; 6,484 lines</td></tr>
+    <tr><td style="width:24%">Testing</td><td><div class="bar"><i style="width:15.8%"></i></div></td><td class="r small muted" style="width:22%">16% &middot; 5,886 lines</td></tr>
+    <tr><td style="width:24%">ML/Data</td><td><div class="bar"><i style="width:9.6%"></i></div></td><td class="r small muted" style="width:22%">10% &middot; 3,591 lines</td></tr>
+    <tr><td style="width:24%">Documentation</td><td><div class="bar"><i style="width:6.9%"></i></div></td><td class="r small muted" style="width:22%">7% &middot; 2,584 lines</td></tr>
+    <tr><td style="width:24%">Backend/API</td><td><div class="bar"><i style="width:5.3%"></i></div></td><td class="r small muted" style="width:22%">5% &middot; 1,994 lines</td></tr>
+  </table>
+  <p class="small muted">Commit types: feature 93, test 9, docs 6, refactor 6, fix 5, build 3, chore 2, ci 1, perf 1</p>
+  <h4>Development timeline</h4>
+  <ul><li><b>Phase 1</b> (2026-04-30 to 2026-06-28, 97 commits): Feature development - Core Logic, UI</li><li><b>Phase 2</b> (2026-07-26 to 2026-07-26, 29 commits): Feature development - Testing, Documentation</li></ul>
+  <h4>Evidence</h4>
+  <div class="flags"><span class="yes">&#10003; Commits</span><span class="yes">&#10003; Pull requests</span><span class="no">&#10007; Releases</span><span class="no">&#10007; Issues</span><span class="yes">&#10003; Code changes</span><span class="yes">&#10003; History</span></div>
+  <table>
+    <tr><th>Commit</th><th>Date</th><th>Why it matters</th><th>Message</th></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/ARIA/commit/260733f5b02dc5ddcba914fc5eb236109410fac9">260733f</a></td><td>2026-04-30</td><td>First commit</td><td>Initialize project with LICENSE, README, main entry point, and requirements file</td></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/ARIA/commit/39ec5cb45dabcf4128192214474ebecb2cb48e43">39ec5cb</a></td><td>2026-05-08</td><td>Large change</td><td>Refactor system_control.py: Enhance functionality and reliability of system control actions</td></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/ARIA/commit/c2dea2808ed327681df54eb4566ec7d0f6444670">c2dea28</a></td><td>2026-05-09</td><td>Large change</td><td>feat(audit_log): implement structured append-only security audit log with integrity verification and query capabilities</td></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/ARIA/commit/ab78198f2ed97776e66567156ae9aaee1903e19f">ab78198</a></td><td>2026-05-09</td><td>Large change</td><td>Enhance ARIA&#39;s semantic memory capabilities with improved storage, search, and context retrieval</td></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/ARIA/commit/18ca2eeb53a8ed6c243616b4fae5e2d14486f3ed">18ca2ee</a></td><td>2026-05-31</td><td>Large change</td><td>feat: implement safe testing framework with mock layer, sandbox environment, and automated test harness</td></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/ARIA/commit/b877c7c694198dc0338013d99815be7367e29aaf">b877c7c</a></td><td>2026-07-26</td><td>Latest commit</td><td>Add browser profiles and planning files</td></tr>
+  </table>
+  <p class="small">
+<b>Pull requests:</b> <a href="https://github.com/Saqlain-mushtaq-alamin/ARIA/pull/1">#1 implement wake word so that it can respose at call</a> (merged)  </p>
+  <p class="small"><a href="https://github.com/Saqlain-mushtaq-alamin/ARIA/commits?author=Saqlain-mushtaq-alamin">All commits by Saqlain-mushtaq-alamin in this repository</a></p>
+</section>
+<section class="project">
+  <h3><a href="https://github.com/Saqlain-mushtaq-alamin/sentry-">sentry-</a></h3>
+  <p class="purpose">Ensure you have Node.js (v18 or higher) and npm installed on your machine.</p>
+  <div class="cols">
+    <div>
+      <table class="kv">
+        <tr><td>Languages</td><td>TypeScript 88%, CSS 11%, JavaScript 1%, HTML 0%</td></tr>
+        <tr><td>Frameworks / tools</td><td>Electron, GitHub Actions, React, Vite, Vitest</td></tr>
+        <tr><td>Period</td><td>Aug 2026 to Sep 2026 (0.9 months)</td></tr>
+        <tr><td>Quality</td><td>65/100 &middot; README 3/5, Tests, CI, Docs dir, Lint config</td></tr>
+      </table>
+    </div>
+    <div>
+      <table class="kv">
+        <tr><td>Your commits</td><td>162 of 162 (100%)</td></tr>
+        <tr><td>Files modified</td><td>138</td></tr>
+        <tr><td>Additions / deletions</td><td>+17,471 / -285</td></tr>
+        <tr><td>Surviving lines</td><td>16,849 of 16,849 lines (100%)</td></tr>
+      </table>
+    </div>
+  </div>
+  <h4>Major development areas</h4>
+  <table class="bars">
+    <tr><td style="width:24%">UI</td><td><div class="bar"><i style="width:39.2%"></i></div></td><td class="r small muted" style="width:22%">39% &middot; 6,952 lines</td></tr>
+    <tr><td style="width:24%">ML/Data</td><td><div class="bar"><i style="width:28.8%"></i></div></td><td class="r small muted" style="width:22%">29% &middot; 5,107 lines</td></tr>
+    <tr><td style="width:24%">Core Logic</td><td><div class="bar"><i style="width:19.7%"></i></div></td><td class="r small muted" style="width:22%">20% &middot; 3,498 lines</td></tr>
+    <tr><td style="width:24%">Testing</td><td><div class="bar"><i style="width:8.0%"></i></div></td><td class="r small muted" style="width:22%">8% &middot; 1,425 lines</td></tr>
+    <tr><td style="width:24%">Build &amp; Config</td><td><div class="bar"><i style="width:1.3%"></i></div></td><td class="r small muted" style="width:22%">1% &middot; 228 lines</td></tr>
+    <tr><td style="width:24%">Database</td><td><div class="bar"><i style="width:1.0%"></i></div></td><td class="r small muted" style="width:22%">1% &middot; 169 lines</td></tr>
+  </table>
+  <p class="small muted">Commit types: feature 122, test 19, fix 7, build 6, docs 4, chore 1, ci 1, style 1, refactor 1</p>
+  <h4>Development timeline</h4>
+  <ul><li><b>Phase 1</b> (2026-08-17 to 2026-08-31, 110 commits): Feature development - UI, ML/Data</li><li><b>Phase 2</b> (2026-09-14 to 2026-09-14, 52 commits): Feature development - ML/Data, Core Logic</li></ul>
+  <h4>Evidence</h4>
+  <div class="flags"><span class="yes">&#10003; Commits</span><span class="no">&#10007; Pull requests</span><span class="no">&#10007; Releases</span><span class="no">&#10007; Issues</span><span class="yes">&#10003; Code changes</span><span class="yes">&#10003; History</span></div>
+  <table>
+    <tr><th>Commit</th><th>Date</th><th>Why it matters</th><th>Message</th></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/sentry-/commit/386b17ed39c6b093f6d2e71545ea6e2cb82907b2">386b17e</a></td><td>2026-08-17</td><td>First commit</td><td>chore: add planning directory to .gitignore</td></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/sentry-/commit/9d94b528cae2439fa2dd97b36f9fd6b096471375">9d94b52</a></td><td>2026-08-23</td><td>Large change</td><td>feat(shared): define domain types, constants, and IPC contract interfaces</td></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/sentry-/commit/35454c8cdd0bff9d212f0523dcf3a5c6dd1f2693">35454c8</a></td><td>2026-08-26</td><td>Large change</td><td>feat(agent): add agent service orchestrating model router and inference lifecycle</td></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/sentry-/commit/f73f6a2cad202bec0046080c97d950c10f1af721">f73f6a2</a></td><td>2026-08-28</td><td>Large change</td><td>feat(ui): create developer mode dashboard with internals, stats, and export controls</td></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/sentry-/commit/51d68280f1c800a6cead3ae4582dad2aad369529">51d6828</a></td><td>2026-08-28</td><td>Large change</td><td>feat(ui): integrate all overlay components with theme support and reduced-motion</td></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/sentry-/commit/7fe114610932cc719d6daf83cd5b2713f756cf5b">7fe1146</a></td><td>2026-09-14</td><td>Latest commit</td><td>feat: implement AgentService to coordinate AI agent tasks and browser interactions</td></tr>
+  </table>
+  <p class="small"><a href="https://github.com/Saqlain-mushtaq-alamin/sentry-/commits?author=Saqlain-mushtaq-alamin">All commits by Saqlain-mushtaq-alamin in this repository</a></p>
+</section>
+<section class="project">
+  <h3><a href="https://github.com/Saqlain-mushtaq-alamin/VeritasCore">VeritasCore</a></h3>
+  <p class="purpose">Unlike black-box fact-checkers, every verdict in VeritasCore traces to concrete evidence: the NLI entailment probability, the retrieved passage, or the consistency distribution.</p>
+  <div class="cols">
+    <div>
+      <table class="kv">
+        <tr><td>Languages</td><td>Python 100%</td></tr>
+        <tr><td>Frameworks / tools</td><td>Gradio, FastAPI, Hugging Face Transformers, NumPy, Ollama, PyTorch, Pydantic, Rich, Sentence Transformers, XGBoost, httpx, pytest, scikit-learn, GitHub Actions, Make, Docker</td></tr>
+        <tr><td>Period</td><td>Jul 2026 to Sep 2026 (2.5 months)</td></tr>
+        <tr><td>Quality</td><td>90/100 &middot; README 5/5, Tests, CI, License, 1 release(s), Docker, Docs dir</td></tr>
+      </table>
+    </div>
+    <div>
+      <table class="kv">
+        <tr><td>Your commits</td><td>135 of 135 (100%)</td></tr>
+        <tr><td>Files modified</td><td>129</td></tr>
+        <tr><td>Additions / deletions</td><td>+22,269 / -1,406</td></tr>
+        <tr><td>Surviving lines</td><td>14,621 of 14,621 lines (100%)</td></tr>
+      </table>
+    </div>
+  </div>
+  <h4>Major development areas</h4>
+  <table class="bars">
+    <tr><td style="width:24%">Core Logic</td><td><div class="bar"><i style="width:33.4%"></i></div></td><td class="r small muted" style="width:22%">33% &middot; 7,903 lines</td></tr>
+    <tr><td style="width:24%">Testing</td><td><div class="bar"><i style="width:30.6%"></i></div></td><td class="r small muted" style="width:22%">31% &middot; 7,251 lines</td></tr>
+    <tr><td style="width:24%">ML/Data</td><td><div class="bar"><i style="width:20.3%"></i></div></td><td class="r small muted" style="width:22%">20% &middot; 4,815 lines</td></tr>
+    <tr><td style="width:24%">Documentation</td><td><div class="bar"><i style="width:10.1%"></i></div></td><td class="r small muted" style="width:22%">10% &middot; 2,392 lines</td></tr>
+    <tr><td style="width:24%">Build &amp; Config</td><td><div class="bar"><i style="width:1.8%"></i></div></td><td class="r small muted" style="width:22%">2% &middot; 424 lines</td></tr>
+    <tr><td style="width:24%">CI/DevOps</td><td><div class="bar"><i style="width:1.6%"></i></div></td><td class="r small muted" style="width:22%">2% &middot; 368 lines</td></tr>
+  </table>
+  <p class="small muted">Commit types: feature 52, test 24, fix 14, chore 14, docs 13, build 8, ci 6, perf 2, refactor 1, style 1</p>
+  <h4>Development timeline</h4>
+  <ul><li><b>Phase 1</b> (2026-07-03 to 2026-07-30, 103 commits): Feature development - Testing, Core Logic</li><li><b>Phase 2</b> (2026-09-16 to 2026-09-16, 32 commits): Mixed development - ML/Data, Testing</li></ul>
+  <h4>Evidence</h4>
+  <div class="flags"><span class="yes">&#10003; Commits</span><span class="no">&#10007; Pull requests</span><span class="yes">&#10003; Releases</span><span class="no">&#10007; Issues</span><span class="yes">&#10003; Code changes</span><span class="yes">&#10003; History</span></div>
+  <table>
+    <tr><th>Commit</th><th>Date</th><th>Why it matters</th><th>Message</th></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/VeritasCore/commit/1e2ff1c826e44931a764d66c93defa5ac195a52d">1e2ff1c</a></td><td>2026-07-03</td><td>First commit</td><td>create all intial file</td></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/VeritasCore/commit/324eded719c712eb9b242d47eda5f0d75aa00cfb">324eded</a></td><td>2026-07-03</td><td>Large change</td><td>add tthe LLM-based claim decomposition using a local language model.</td></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/VeritasCore/commit/2b8b379bb91d2ad7e95e49a505d64f9596364d51">2b8b379</a></td><td>2026-07-04</td><td>Large change</td><td>NLI-based grounded claim verification using a cross-encoder.</td></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/VeritasCore/commit/18026aef227b33e51aa83102472ea758d00600ba">18026ae</a></td><td>2026-07-04</td><td>Large change</td><td>Trained fusion model for combining verification signals.</td></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/VeritasCore/commit/030fe87866f2c96edd500d89149eb3309ec260df">030fe87</a></td><td>2026-09-16</td><td>Large change</td><td>feat: add run_benchmarks_v2.py unified benchmark runner with dataset splits and bootstrap CIs</td></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/VeritasCore/commit/7e194970bb56fe6a5e36f4562679cb69b7b1c10e">7e19497</a></td><td>2026-09-16</td><td>Latest commit</td><td>test: add TruthfulQA benchmark results</td></tr>
+  </table>
+  <p class="small">
+<b>Releases:</b> <a href="https://github.com/Saqlain-mushtaq-alamin/VeritasCore/releases/tag/v1.0.0">v1.0.0</a><br>  </p>
+  <p class="small"><a href="https://github.com/Saqlain-mushtaq-alamin/VeritasCore/commits?author=Saqlain-mushtaq-alamin">All commits by Saqlain-mushtaq-alamin in this repository</a></p>
+</section>
+<section class="project">
+  <h3><a href="https://github.com/Saqlain-mushtaq-alamin/NIDS">NIDS</a></h3>
+  <p class="purpose">No description available.</p>
+  <div class="cols">
+    <div>
+      <table class="kv">
+        <tr><td>Languages</td><td>Python 100%</td></tr>
+        <tr><td>Frameworks / tools</td><td>LightGBM, NumPy, PyTorch, SHAP, Scapy, Streamlit, XGBoost, pandas, pytest, scikit-learn</td></tr>
+        <tr><td>Period</td><td>Sep 2026 to Oct 2026 (0.9 months)</td></tr>
+        <tr><td>Quality</td><td>30/100 &middot; README 0/5, Tests, Docs dir</td></tr>
+      </table>
+    </div>
+    <div>
+      <table class="kv">
+        <tr><td>Your commits</td><td>96 of 96 (100%)</td></tr>
+        <tr><td>Files modified</td><td>71</td></tr>
+        <tr><td>Additions / deletions</td><td>+13,655 / -266</td></tr>
+        <tr><td>Surviving lines</td><td>11,884 of 11,884 lines (100%)</td></tr>
+      </table>
+    </div>
+  </div>
+  <h4>Major development areas</h4>
+  <table class="bars">
+    <tr><td style="width:24%">ML/Data</td><td><div class="bar"><i style="width:67.4%"></i></div></td><td class="r small muted" style="width:22%">67% &middot; 9,385 lines</td></tr>
+    <tr><td style="width:24%">Testing</td><td><div class="bar"><i style="width:16.1%"></i></div></td><td class="r small muted" style="width:22%">16% &middot; 2,246 lines</td></tr>
+    <tr><td style="width:24%">Documentation</td><td><div class="bar"><i style="width:5.8%"></i></div></td><td class="r small muted" style="width:22%">6% &middot; 809 lines</td></tr>
+    <tr><td style="width:24%">Core Logic</td><td><div class="bar"><i style="width:3.5%"></i></div></td><td class="r small muted" style="width:22%">4% &middot; 491 lines</td></tr>
+    <tr><td style="width:24%">Security</td><td><div class="bar"><i style="width:3.3%"></i></div></td><td class="r small muted" style="width:22%">3% &middot; 462 lines</td></tr>
+    <tr><td style="width:24%">Database</td><td><div class="bar"><i style="width:1.7%"></i></div></td><td class="r small muted" style="width:22%">2% &middot; 235 lines</td></tr>
+  </table>
+  <p class="small muted">Commit types: feature 38, test 16, refactor 14, chore 13, build 7, docs 7, fix 1</p>
+  <h4>Development timeline</h4>
+  <ul><li><b>Phase 1</b> (2026-09-06 to 2026-09-06, 18 commits): Project setup &amp; foundations - ML/Data, Documentation</li><li><b>Phase 2</b> (2026-09-28 to 2026-10-03, 78 commits): Feature development - ML/Data, Testing</li></ul>
+  <h4>Evidence</h4>
+  <div class="flags"><span class="yes">&#10003; Commits</span><span class="no">&#10007; Pull requests</span><span class="no">&#10007; Releases</span><span class="no">&#10007; Issues</span><span class="yes">&#10003; Code changes</span><span class="yes">&#10003; History</span></div>
+  <table>
+    <tr><th>Commit</th><th>Date</th><th>Why it matters</th><th>Message</th></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/NIDS/commit/07b6b8a2bd65f9fa5de77a7c32adc4900a28c449">07b6b8a</a></td><td>2026-09-06</td><td>First commit</td><td>chore: add gitignore for generated and local files</td></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/NIDS/commit/04a0d07ea811900d6c22f6ef64e01ad08f3f91aa">04a0d07</a></td><td>2026-10-01</td><td>Large change</td><td>feat(data): add network flow feature extractor</td></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/NIDS/commit/ebda723a490c2cdf032c7b434ff9e408a0d7fad2">ebda723</a></td><td>2026-10-01</td><td>Large change</td><td>feat(evaluation): add cross-dataset evaluation harness</td></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/NIDS/commit/d1d46f25403c6ad561058995a4368d009e75dfdc">d1d46f2</a></td><td>2026-10-03</td><td>Large change</td><td>feat(models): add GNN network detector</td></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/NIDS/commit/83a364cd146fa2a9127c3ad725bdec1c39c35306">83a364c</a></td><td>2026-10-03</td><td>Large change</td><td>feat(models): add autoencoder anomaly detector</td></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/NIDS/commit/bc2350462b6b84977830112e7c6285bf5f1ebc4d">bc23504</a></td><td>2026-10-03</td><td>Latest commit</td><td>test(models): add autoencoder detection tests</td></tr>
+  </table>
+  <p class="small"><a href="https://github.com/Saqlain-mushtaq-alamin/NIDS/commits?author=Saqlain-mushtaq-alamin">All commits by Saqlain-mushtaq-alamin in this repository</a></p>
+</section>
+<section class="project">
+  <h3><a href="https://github.com/Saqlain-mushtaq-alamin/StudyMap">StudyMap</a></h3>
+  <p class="purpose">A science-backed study timer that builds a personalised daily plan based on your exams, difficulty levels, and readiness — so you always know exactly what to study next.</p>
+  <div class="cols">
+    <div>
+      <table class="kv">
+        <tr><td>Languages</td><td>TypeScript 98%, JavaScript 1%, CSS 0%</td></tr>
+        <tr><td>Frameworks / tools</td><td>Expo, Jest, React, React Native, Tailwind CSS</td></tr>
+        <tr><td>Period</td><td>Jun 2026 to Aug 2026 (1.7 months)</td></tr>
+        <tr><td>Quality</td><td>60/100 &middot; README 4/5, Tests, License, Docs dir</td></tr>
+      </table>
+    </div>
+    <div>
+      <table class="kv">
+        <tr><td>Your commits</td><td>86 of 86 (100%)</td></tr>
+        <tr><td>Files modified</td><td>104</td></tr>
+        <tr><td>Additions / deletions</td><td>+13,791 / -1,823</td></tr>
+        <tr><td>Surviving lines</td><td>10,417 of 10,417 lines (100%)</td></tr>
+      </table>
+    </div>
+  </div>
+  <h4>Major development areas</h4>
+  <table class="bars">
+    <tr><td style="width:24%">UI</td><td><div class="bar"><i style="width:60.0%"></i></div></td><td class="r small muted" style="width:22%">60% &middot; 9,364 lines</td></tr>
+    <tr><td style="width:24%">Testing</td><td><div class="bar"><i style="width:14.2%"></i></div></td><td class="r small muted" style="width:22%">14% &middot; 2,213 lines</td></tr>
+    <tr><td style="width:24%">Core Logic</td><td><div class="bar"><i style="width:10.6%"></i></div></td><td class="r small muted" style="width:22%">11% &middot; 1,655 lines</td></tr>
+    <tr><td style="width:24%">Documentation</td><td><div class="bar"><i style="width:6.6%"></i></div></td><td class="r small muted" style="width:22%">7% &middot; 1,025 lines</td></tr>
+    <tr><td style="width:24%">Database</td><td><div class="bar"><i style="width:5.0%"></i></div></td><td class="r small muted" style="width:22%">5% &middot; 776 lines</td></tr>
+    <tr><td style="width:24%">ML/Data</td><td><div class="bar"><i style="width:1.3%"></i></div></td><td class="r small muted" style="width:22%">1% &middot; 200 lines</td></tr>
+  </table>
+  <p class="small muted">Commit types: feature 60, fix 7, chore 6, test 4, docs 3, build 3, refactor 2, init 1</p>
+  <h4>Development timeline</h4>
+  <ul><li><b>Phase 1</b> (2026-06-11 to 2026-07-18, 64 commits): Project setup &amp; foundations - UI, Testing</li><li><b>Phase 2</b> (2026-08-03 to 2026-08-03, 22 commits): Feature development - Documentation, UI</li></ul>
+  <h4>Evidence</h4>
+  <div class="flags"><span class="yes">&#10003; Commits</span><span class="no">&#10007; Pull requests</span><span class="no">&#10007; Releases</span><span class="no">&#10007; Issues</span><span class="yes">&#10003; Code changes</span><span class="yes">&#10003; History</span></div>
+  <table>
+    <tr><th>Commit</th><th>Date</th><th>Why it matters</th><th>Message</th></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/StudyMap/commit/a1f8b12ca467b8bdf01492b4b2be0d89384984e1">a1f8b12</a></td><td>2026-06-11</td><td>First commit</td><td>Initial commit</td></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/StudyMap/commit/7a16f12a989edd5de72a3d9b21c7041b9ccaa2f5">7a16f12</a></td><td>2026-06-12</td><td>Large change</td><td>develop app db for the mvp</td></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/StudyMap/commit/7a7d3ad8d8f50ca6b8f2bd10c55c4b264e95ebd7">7a7d3ad</a></td><td>2026-06-12</td><td>Large change</td><td>develop the components for the ui</td></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/StudyMap/commit/c10bc51fdec0895f5970da15ad2606725d800381">c10bc51</a></td><td>2026-06-14</td><td>Large change</td><td>add the onboarding</td></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/StudyMap/commit/382b9347c4fe30df9651ba3db74dbad04e6b8f72">382b934</a></td><td>2026-06-15</td><td>Large change</td><td>update the id</td></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/StudyMap/commit/766bcca8b7a43612fc30eade83967607ad8189ab">766bcca</a></td><td>2026-08-03</td><td>Latest commit</td><td>feat(utils): add quiet hours scheduling helper</td></tr>
+  </table>
+  <p class="small"><a href="https://github.com/Saqlain-mushtaq-alamin/StudyMap/commits?author=Saqlain-mushtaq-alamin">All commits by Saqlain-mushtaq-alamin in this repository</a></p>
+</section>
+<section class="project">
+  <h3><a href="https://github.com/Saqlain-mushtaq-alamin/portfolio-site">portfolio-site</a></h3>
+  <p class="purpose">No description available.</p>
+  <div class="cols">
+    <div>
+      <table class="kv">
+        <tr><td>Languages</td><td>HTML 53%, CSS 47%</td></tr>
+        <tr><td>Frameworks / tools</td><td>none detected</td></tr>
+        <tr><td>Period</td><td>Sep 2025 to Jun 2026 (8.7 months)</td></tr>
+        <tr><td>Quality</td><td>25/100 &middot; README 3/5, License</td></tr>
+      </table>
+    </div>
+    <div>
+      <table class="kv">
+        <tr><td>Your commits</td><td>38 of 43 (88%)</td></tr>
+        <tr><td>Files modified</td><td>16</td></tr>
+        <tr><td>Additions / deletions</td><td>+16,679 / -9,611</td></tr>
+        <tr><td>Surviving lines</td><td>9,233 of 9,822 lines (94%)</td></tr>
+      </table>
+    </div>
+  </div>
+  <h4>Major development areas</h4>
+  <table class="bars">
+    <tr><td style="width:24%">UI</td><td><div class="bar"><i style="width:99.2%"></i></div></td><td class="r small muted" style="width:22%">99% &middot; 26,089 lines</td></tr>
+    <tr><td style="width:24%">Documentation</td><td><div class="bar"><i style="width:0.8%"></i></div></td><td class="r small muted" style="width:22%">1% &middot; 201 lines</td></tr>
+  </table>
+  <p class="small muted">Commit types: feature 25, chore 6, refactor 4, docs 1, fix 1, style 1</p>
+  <h4>Development timeline</h4>
+  <ul><li><b>Phase 1</b> (2025-09-14 to 2025-09-16, 10 commits): Feature development - UI, Documentation</li><li><b>Phase 2</b> (2025-10-23 to 2025-10-29, 14 commits): Feature development - UI</li><li><b>Phase 3</b> (2026-03-10 to 2026-03-11, 7 commits): Feature development - UI</li><li><b>Phase 4</b> (2026-06-07 to 2026-06-07, 7 commits): Feature development - UI</li></ul>
+  <h4>Evidence</h4>
+  <div class="flags"><span class="yes">&#10003; Commits</span><span class="no">&#10007; Pull requests</span><span class="no">&#10007; Releases</span><span class="no">&#10007; Issues</span><span class="yes">&#10003; Code changes</span><span class="yes">&#10003; History</span></div>
+  <table>
+    <tr><th>Commit</th><th>Date</th><th>Why it matters</th><th>Message</th></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/portfolio-site/commit/7cc9051df1a787053dd37d6a59221857d1b3f946">7cc9051</a></td><td>2025-09-14</td><td>First commit</td><td>Initial commit</td></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/portfolio-site/commit/bb18d8266aab189091113f3692c91a0dbfa47cc4">bb18d82</a></td><td>2025-09-16</td><td>Large change</td><td>edit the contact me page</td></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/portfolio-site/commit/b03622253fd18eb7f843f8d739741835dc90af1f">b036222</a></td><td>2025-10-27</td><td>Large change</td><td>add the serive in the home page</td></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/portfolio-site/commit/ce5e1c434c6daaba801aafb3139ca6bd8d933bad">ce5e1c4</a></td><td>2025-10-27</td><td>Large change</td><td>UPDATE THE RESUME IN HOMEPAGE</td></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/portfolio-site/commit/0b7f44af0372b0450c639896765ef900e4c17902">0b7f44a</a></td><td>2026-03-11</td><td>Large change</td><td>fix: rename protfolio to portfolio, fix image path, add root redirect</td></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/portfolio-site/commit/2ed43a53b584526257fce5d86764f09b6755893f">2ed43a5</a></td><td>2026-06-07</td><td>Latest commit</td><td>change the resume</td></tr>
+  </table>
+  <p class="small"><a href="https://github.com/Saqlain-mushtaq-alamin/portfolio-site/commits?author=Saqlain-mushtaq-alamin">All commits by Saqlain-mushtaq-alamin in this repository</a></p>
+</section>
+<section class="project">
+  <h3><a href="https://github.com/Saqlain-mushtaq-alamin/UA-HCMARL">UA-HCMARL</a></h3>
+  <p class="purpose">No description available.</p>
+  <div class="cols">
+    <div>
+      <table class="kv">
+        <tr><td>Languages</td><td>Python 100%</td></tr>
+        <tr><td>Frameworks / tools</td><td>none detected</td></tr>
+        <tr><td>Period</td><td>Aug 2026 to Sep 2026 (1.7 months)</td></tr>
+        <tr><td>Quality</td><td>25/100 &middot; README 0/5, Tests</td></tr>
+      </table>
+    </div>
+    <div>
+      <table class="kv">
+        <tr><td>Your commits</td><td>127 of 127 (100%)</td></tr>
+        <tr><td>Files modified</td><td>77</td></tr>
+        <tr><td>Additions / deletions</td><td>+9,138 / -541</td></tr>
+        <tr><td>Surviving lines</td><td>8,279 of 8,279 lines (100%)</td></tr>
+      </table>
+    </div>
+  </div>
+  <h4>Major development areas</h4>
+  <table class="bars">
+    <tr><td style="width:24%">Core Logic</td><td><div class="bar"><i style="width:48.1%"></i></div></td><td class="r small muted" style="width:22%">48% &middot; 4,654 lines</td></tr>
+    <tr><td style="width:24%">ML/Data</td><td><div class="bar"><i style="width:39.4%"></i></div></td><td class="r small muted" style="width:22%">39% &middot; 3,814 lines</td></tr>
+    <tr><td style="width:24%">Testing</td><td><div class="bar"><i style="width:8.3%"></i></div></td><td class="r small muted" style="width:22%">8% &middot; 804 lines</td></tr>
+    <tr><td style="width:24%">Networking</td><td><div class="bar"><i style="width:1.6%"></i></div></td><td class="r small muted" style="width:22%">2% &middot; 155 lines</td></tr>
+    <tr><td style="width:24%">Platform Integration</td><td><div class="bar"><i style="width:1.3%"></i></div></td><td class="r small muted" style="width:22%">1% &middot; 122 lines</td></tr>
+    <tr><td style="width:24%">Other</td><td><div class="bar"><i style="width:1.0%"></i></div></td><td class="r small muted" style="width:22%">1% &middot; 98 lines</td></tr>
+  </table>
+  <p class="small muted">Commit types: feature 75, fix 21, test 16, build 11, chore 4</p>
+  <h4>Development timeline</h4>
+  <ul><li><b>Phase 1</b> (2026-08-05 to 2026-08-21, 87 commits): Feature development - Core Logic, ML/Data</li><li><b>Phase 2</b> (2026-09-12 to 2026-09-27, 40 commits): Feature development - Core Logic, ML/Data</li></ul>
+  <h4>Evidence</h4>
+  <div class="flags"><span class="yes">&#10003; Commits</span><span class="no">&#10007; Pull requests</span><span class="no">&#10007; Releases</span><span class="no">&#10007; Issues</span><span class="yes">&#10003; Code changes</span><span class="yes">&#10003; History</span></div>
+  <table>
+    <tr><th>Commit</th><th>Date</th><th>Why it matters</th><th>Message</th></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/UA-HCMARL/commit/8d2cdf63a4e481b22c5c4f4c0ffa485a42f31142">8d2cdf6</a></td><td>2026-08-05</td><td>First commit</td><td>chore: add gitignore file for python project environments and system files</td></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/UA-HCMARL/commit/63a73a488ca1754a9a9b3cc1ade1db5d6c45a4a9">63a73a4</a></td><td>2026-08-21</td><td>Large change</td><td>feat(baseline): combine BSE with confidence-modulated MAPPO-LCE (Stage 3)</td></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/UA-HCMARL/commit/9bdbfd2a1f7ee4ab7b17cca5cd6ed914f1e4ea28">9bdbfd2</a></td><td>2026-08-21</td><td>Large change</td><td>feat(baseline): implement complete UA-HCMARL system</td></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/UA-HCMARL/commit/43109b65563b67201136fc4f8a44d878de389766">43109b6</a></td><td>2026-08-21</td><td>Large change</td><td>feat(script): add complete re-run of Phases 3-5 with fixes</td></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/UA-HCMARL/commit/44cd5aa9f98da5284959643aa940f77cbcd8531b">44cd5aa</a></td><td>2026-08-21</td><td>Large change</td><td>feat(script): add complete end-to-end experiment runner</td></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/UA-HCMARL/commit/c989e296629da9b0732c29af867740bef659be93">c989e29</a></td><td>2026-09-27</td><td>Latest commit</td><td>chore: remove file</td></tr>
+  </table>
+  <p class="small"><a href="https://github.com/Saqlain-mushtaq-alamin/UA-HCMARL/commits?author=Saqlain-mushtaq-alamin">All commits by Saqlain-mushtaq-alamin in this repository</a></p>
+</section>
+<section class="project">
+  <h3><a href="https://github.com/Saqlain-mushtaq-alamin/D-T_Pool">D-T_Pool</a></h3>
+  <p class="purpose">Dhaka Tesla Pool is a hyper-localized electric ride-pooling platform designed specifically for Dhaka&#39;s dense urban commuting corridors.</p>
+  <div class="cols">
+    <div>
+      <table class="kv">
+        <tr><td>Languages</td><td>TypeScript 92%, SQL 5%, CSS 2%, HTML 0%, Shell 0%</td></tr>
+        <tr><td>Frameworks / tools</td><td>Express, Jest, Docker, React, Vite, Vitest</td></tr>
+        <tr><td>Period</td><td>Sep 2026 to Sep 2026 (0.2 months)</td></tr>
+        <tr><td>Quality</td><td>55/100 &middot; README 3/5, Tests, 1 release(s), Docker, Docs dir</td></tr>
+      </table>
+    </div>
+    <div>
+      <table class="kv">
+        <tr><td>Your commits</td><td>73 of 73 (100%)</td></tr>
+        <tr><td>Files modified</td><td>84</td></tr>
+        <tr><td>Additions / deletions</td><td>+9,158 / -276</td></tr>
+        <tr><td>Surviving lines</td><td>6,845 of 6,845 lines (100%)</td></tr>
+      </table>
+    </div>
+  </div>
+  <h4>Major development areas</h4>
+  <table class="bars">
+    <tr><td style="width:24%">UI</td><td><div class="bar"><i style="width:21.4%"></i></div></td><td class="r small muted" style="width:22%">21% &middot; 2,016 lines</td></tr>
+    <tr><td style="width:24%">Documentation</td><td><div class="bar"><i style="width:19.1%"></i></div></td><td class="r small muted" style="width:22%">19% &middot; 1,801 lines</td></tr>
+    <tr><td style="width:24%">Backend/API</td><td><div class="bar"><i style="width:18.5%"></i></div></td><td class="r small muted" style="width:22%">19% &middot; 1,750 lines</td></tr>
+    <tr><td style="width:24%">Testing</td><td><div class="bar"><i style="width:15.9%"></i></div></td><td class="r small muted" style="width:22%">16% &middot; 1,502 lines</td></tr>
+    <tr><td style="width:24%">Database</td><td><div class="bar"><i style="width:7.3%"></i></div></td><td class="r small muted" style="width:22%">7% &middot; 685 lines</td></tr>
+    <tr><td style="width:24%">Security</td><td><div class="bar"><i style="width:6.7%"></i></div></td><td class="r small muted" style="width:22%">7% &middot; 629 lines</td></tr>
+  </table>
+  <p class="small muted">Commit types: feature 46, docs 11, test 10, chore 5, refactor 1</p>
+  <h4>Development timeline</h4>
+  <ul><li><b>Phase 1</b> (2026-09-24 to 2026-09-29, 73 commits): Feature development - UI, Documentation</li></ul>
+  <h4>Evidence</h4>
+  <div class="flags"><span class="yes">&#10003; Commits</span><span class="no">&#10007; Pull requests</span><span class="yes">&#10003; Releases</span><span class="no">&#10007; Issues</span><span class="yes">&#10003; Code changes</span><span class="yes">&#10003; History</span></div>
+  <table>
+    <tr><th>Commit</th><th>Date</th><th>Why it matters</th><th>Message</th></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/D-T_Pool/commit/756a542736301805bc24d0cb1c291e29a7941a8b">756a542</a></td><td>2026-09-24</td><td>First commit</td><td>docs(project): add root project README</td></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/D-T_Pool/commit/abc6de2a1b123d4adcb404f95814fb8ae0754d87">abc6de2</a></td><td>2026-09-24</td><td>Large change</td><td>feat(pooling): implement pool formation and atomic seat allocation</td></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/D-T_Pool/commit/36a339d473dce1fbf48fed2bde653eaef6b929ed">36a339d</a></td><td>2026-09-24</td><td>Large change</td><td>feat(frontend): implement driver pooling and trip management console</td></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/D-T_Pool/commit/488f8fe182320a3c5647327306c4ab5d11dd94ee">488f8fe</a></td><td>2026-09-24</td><td>Large change</td><td>feat(frontend): add application shell and test environment</td></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/D-T_Pool/commit/09277e1948e8c30eec584f940a0ebd24138ced0a">09277e1</a></td><td>2026-09-24</td><td>Large change</td><td>feat(frontend): implement ride tracking history and cancellation states</td></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/D-T_Pool/commit/94eed9382576ee658f672bd79f1cbd3c903351bb">94eed93</a></td><td>2026-09-29</td><td>Latest commit</td><td>Update render.yaml</td></tr>
+  </table>
+  <p class="small">
+<b>Releases:</b> <a href="https://github.com/Saqlain-mushtaq-alamin/D-T_Pool/releases/tag/v1.0.0">v1.0.0</a><br>  </p>
+  <p class="small"><a href="https://github.com/Saqlain-mushtaq-alamin/D-T_Pool/commits?author=Saqlain-mushtaq-alamin">All commits by Saqlain-mushtaq-alamin in this repository</a></p>
+</section>
+<section class="project">
+  <h3><a href="https://github.com/Saqlain-mushtaq-alamin/Finanalyzer-">Finanalyzer-</a></h3>
+  <p class="purpose">This project was built to help automate and visualize basic financial tracking — perfect for students, small businesses, or anyone learning the accounting process!</p>
+  <div class="cols">
+    <div>
+      <table class="kv">
+        <tr><td>Languages</td><td>Java 83%, HTML 15%, CSS 2%</td></tr>
+        <tr><td>Frameworks / tools</td><td>none detected</td></tr>
+        <tr><td>Period</td><td>May 2025 to May 2025 (0.2 months)</td></tr>
+        <tr><td>Quality</td><td>25/100 &middot; README 3/5, License</td></tr>
+      </table>
+    </div>
+    <div>
+      <table class="kv">
+        <tr><td>Your commits</td><td>13 of 13 (100%)</td></tr>
+        <tr><td>Files modified</td><td>19</td></tr>
+        <tr><td>Additions / deletions</td><td>+5,913 / -23</td></tr>
+        <tr><td>Surviving lines</td><td>5,786 of 5,786 lines (100%)</td></tr>
+      </table>
+    </div>
+  </div>
+  <h4>Major development areas</h4>
+  <table class="bars">
+    <tr><td style="width:24%">Core Logic</td><td><div class="bar"><i style="width:79.3%"></i></div></td><td class="r small muted" style="width:22%">79% &middot; 4,708 lines</td></tr>
+    <tr><td style="width:24%">UI</td><td><div class="bar"><i style="width:18.6%"></i></div></td><td class="r small muted" style="width:22%">19% &middot; 1,105 lines</td></tr>
+    <tr><td style="width:24%">Documentation</td><td><div class="bar"><i style="width:0.9%"></i></div></td><td class="r small muted" style="width:22%">1% &middot; 56 lines</td></tr>
+    <tr><td style="width:24%">Build &amp; Config</td><td><div class="bar"><i style="width:0.5%"></i></div></td><td class="r small muted" style="width:22%">0% &middot; 29 lines</td></tr>
+    <tr><td style="width:24%">Other</td><td><div class="bar"><i style="width:0.4%"></i></div></td><td class="r small muted" style="width:22%">0% &middot; 23 lines</td></tr>
+    <tr><td style="width:24%">Database</td><td><div class="bar"><i style="width:0.3%"></i></div></td><td class="r small muted" style="width:22%">0% &middot; 15 lines</td></tr>
+  </table>
+  <p class="small muted">Commit types: feature 4, docs 3, chore 3, init 2, fix 1</p>
+  <h4>Development timeline</h4>
+  <ul><li><b>Phase 1</b> (2025-05-10 to 2025-05-17, 13 commits): Project setup &amp; foundations - Core Logic, UI</li></ul>
+  <h4>Evidence</h4>
+  <div class="flags"><span class="yes">&#10003; Commits</span><span class="no">&#10007; Pull requests</span><span class="no">&#10007; Releases</span><span class="no">&#10007; Issues</span><span class="yes">&#10003; Code changes</span><span class="yes">&#10003; History</span></div>
+  <table>
+    <tr><th>Commit</th><th>Date</th><th>Why it matters</th><th>Message</th></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/Finanalyzer-/commit/592cc77a965f835468d74e8ed292bcc12acd0fc7">592cc77</a></td><td>2025-05-10</td><td>First commit</td><td>Initial commit</td></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/Finanalyzer-/commit/6fabe8214b6fe962d69f1326725e31402eb2bb27">6fabe82</a></td><td>2025-05-10</td><td>Large change</td><td>Add Finanalyzer- folder</td></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/Finanalyzer-/commit/1e0c1382883452804473eb43b72f86d990044250">1e0c138</a></td><td>2025-05-17</td><td>Large change</td><td>edit nav_bar</td></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/Finanalyzer-/commit/5535edab2630641efde8bc9e9b655e1392aa0540">5535eda</a></td><td>2025-05-17</td><td>Large change</td><td>edit footer logo and navigation links</td></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/Finanalyzer-/commit/309e3616cf875f23d1c77e2d0f867a06c9979ea8">309e361</a></td><td>2025-05-17</td><td>Large change</td><td>fixing some elements  position</td></tr>
+  </table>
+  <p class="small"><a href="https://github.com/Saqlain-mushtaq-alamin/Finanalyzer-/commits?author=Saqlain-mushtaq-alamin">All commits by Saqlain-mushtaq-alamin in this repository</a></p>
+</section>
+<section class="project">
+  <h3><a href="https://github.com/Saqlain-mushtaq-alamin/Civitas-X">Civitas-X</a></h3>
+  <p class="purpose">Autonomous City Simulation in 2D using OpenGL + FreeGLUT.</p>
+  <div class="cols">
+    <div>
+      <table class="kv">
+        <tr><td>Languages</td><td>C 65%, C++ 33%, Python 1%</td></tr>
+        <tr><td>Frameworks / tools</td><td>CMake, Make</td></tr>
+        <tr><td>Period</td><td>Mar 2026 to Apr 2026 (1.1 months)</td></tr>
+        <tr><td>Quality</td><td>40/100 &middot; README 4/5, License, Docs dir, Lint config</td></tr>
+      </table>
+    </div>
+    <div>
+      <table class="kv">
+        <tr><td>Your commits</td><td>40 of 40 (100%)</td></tr>
+        <tr><td>Files modified</td><td>53</td></tr>
+        <tr><td>Additions / deletions</td><td>+7,461 / -1,482</td></tr>
+        <tr><td>Surviving lines</td><td>4,645 of 4,645 lines (100%) (sampled)</td></tr>
+      </table>
+    </div>
+  </div>
+  <h4>Major development areas</h4>
+  <table class="bars">
+    <tr><td style="width:24%">Core Logic</td><td><div class="bar"><i style="width:87.1%"></i></div></td><td class="r small muted" style="width:22%">87% &middot; 7,789 lines</td></tr>
+    <tr><td style="width:24%">Documentation</td><td><div class="bar"><i style="width:4.6%"></i></div></td><td class="r small muted" style="width:22%">5% &middot; 408 lines</td></tr>
+    <tr><td style="width:24%">Other</td><td><div class="bar"><i style="width:4.2%"></i></div></td><td class="r small muted" style="width:22%">4% &middot; 374 lines</td></tr>
+    <tr><td style="width:24%">ML/Data</td><td><div class="bar"><i style="width:2.8%"></i></div></td><td class="r small muted" style="width:22%">3% &middot; 249 lines</td></tr>
+    <tr><td style="width:24%">Build &amp; Config</td><td><div class="bar"><i style="width:0.8%"></i></div></td><td class="r small muted" style="width:22%">1% &middot; 74 lines</td></tr>
+    <tr><td style="width:24%">Networking</td><td><div class="bar"><i style="width:0.5%"></i></div></td><td class="r small muted" style="width:22%">1% &middot; 49 lines</td></tr>
+  </table>
+  <p class="small muted">Commit types: feature 28, refactor 9, docs 2, perf 1</p>
+  <h4>Development timeline</h4>
+  <ul><li><b>Phase 1</b> (2026-03-13 to 2026-03-14, 27 commits): Feature development - Core Logic, ML/Data</li><li><b>Phase 2</b> (2026-04-01 to 2026-04-15, 13 commits): Feature development - Core Logic, Documentation</li></ul>
+  <h4>Evidence</h4>
+  <div class="flags"><span class="yes">&#10003; Commits</span><span class="no">&#10007; Pull requests</span><span class="no">&#10007; Releases</span><span class="no">&#10007; Issues</span><span class="yes">&#10003; Code changes</span><span class="yes">&#10003; History</span></div>
+  <table>
+    <tr><th>Commit</th><th>Date</th><th>Why it matters</th><th>Message</th></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/Civitas-X/commit/bb0e00459a061a9f0b21843b80ab0b5e0a9e389f">bb0e004</a></td><td>2026-03-13</td><td>First commit</td><td>Initial commit</td></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/Civitas-X/commit/26eb8bd56384a07f2406fa661fcea31e42db46f8">26eb8bd</a></td><td>2026-03-14</td><td>Large change</td><td>Refactor project structure and update CMake configuration to include new engine and graphics components</td></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/Civitas-X/commit/c0fc30b27d7e561c9b9a065b99d8a3818e91e03a">c0fc30b</a></td><td>2026-03-14</td><td>Large change</td><td>Implement core agent and simulation systems, including car and NPC agents, behavior and economy systems, and traffic management</td></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/Civitas-X/commit/1d83d4984989ecc24537e53a1396f643f8bfca7e">1d83d49</a></td><td>2026-03-14</td><td>Large change</td><td>Implement A* Pathfinding and Road Graph Construction</td></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/Civitas-X/commit/b8320ff1a497a8cbf328fd315aceeeef4182670e">b8320ff</a></td><td>2026-03-14</td><td>Large change</td><td>Enhance NpcAgent structure; add accessAnchor, finalApproach, and hasAccessAnchor attributes. Update makeDefaultNpc function and NPC behavior in updateNpcs for improved navigation and roadside access handling.</td></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/Civitas-X/commit/43a8465fc45e1e92156c1fbf4a4eaec09f59efc2">43a8465</a></td><td>2026-04-15</td><td>Latest commit</td><td>Refactor code structure for improved readability and maintainability</td></tr>
+  </table>
+  <p class="small"><a href="https://github.com/Saqlain-mushtaq-alamin/Civitas-X/commits?author=Saqlain-mushtaq-alamin">All commits by Saqlain-mushtaq-alamin in this repository</a></p>
+</section>
+<section class="project">
+  <h3><a href="https://github.com/Saqlain-mushtaq-alamin/RepoBrief">RepoBrief</a></h3>
+  <p class="purpose">Installation • Quick Start • Chat Mode • Configuration • How It Works</p>
+  <div class="cols">
+    <div>
+      <table class="kv">
+        <tr><td>Languages</td><td>Python 100%</td></tr>
+        <tr><td>Frameworks / tools</td><td>Anthropic API, OpenAI API, Rich, pytest, GitHub Actions, Make</td></tr>
+        <tr><td>Period</td><td>Aug 2026 to Sep 2026 (0.3 months)</td></tr>
+        <tr><td>Quality</td><td>85/100 &middot; README 5/5, Tests, CI, License, 1 release(s), Docs dir</td></tr>
+      </table>
+    </div>
+    <div>
+      <table class="kv">
+        <tr><td>Your commits</td><td>71 of 71 (100%)</td></tr>
+        <tr><td>Files modified</td><td>67</td></tr>
+        <tr><td>Additions / deletions</td><td>+6,050 / -25</td></tr>
+        <tr><td>Surviving lines</td><td>4,049 of 4,049 lines (100%)</td></tr>
+      </table>
+    </div>
+  </div>
+  <h4>Major development areas</h4>
+  <table class="bars">
+    <tr><td style="width:24%">Core Logic</td><td><div class="bar"><i style="width:36.0%"></i></div></td><td class="r small muted" style="width:22%">36% &middot; 2,184 lines</td></tr>
+    <tr><td style="width:24%">Documentation</td><td><div class="bar"><i style="width:26.2%"></i></div></td><td class="r small muted" style="width:22%">26% &middot; 1,590 lines</td></tr>
+    <tr><td style="width:24%">Testing</td><td><div class="bar"><i style="width:18.7%"></i></div></td><td class="r small muted" style="width:22%">19% &middot; 1,139 lines</td></tr>
+    <tr><td style="width:24%">UI</td><td><div class="bar"><i style="width:8.7%"></i></div></td><td class="r small muted" style="width:22%">9% &middot; 527 lines</td></tr>
+    <tr><td style="width:24%">Security</td><td><div class="bar"><i style="width:4.4%"></i></div></td><td class="r small muted" style="width:22%">4% &middot; 266 lines</td></tr>
+    <tr><td style="width:24%">Build &amp; Config</td><td><div class="bar"><i style="width:3.1%"></i></div></td><td class="r small muted" style="width:22%">3% &middot; 190 lines</td></tr>
+  </table>
+  <p class="small muted">Commit types: feature 31, test 17, docs 11, chore 5, ci 4, build 2, fix 1</p>
+  <h4>Development timeline</h4>
+  <ul><li><b>Phase 1</b> (2026-08-27 to 2026-09-05, 71 commits): Feature development - Core Logic, Documentation</li></ul>
+  <h4>Evidence</h4>
+  <div class="flags"><span class="yes">&#10003; Commits</span><span class="no">&#10007; Pull requests</span><span class="yes">&#10003; Releases</span><span class="no">&#10007; Issues</span><span class="yes">&#10003; Code changes</span><span class="yes">&#10003; History</span></div>
+  <table>
+    <tr><th>Commit</th><th>Date</th><th>Why it matters</th><th>Message</th></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/RepoBrief/commit/650350da464e93fa421b0a95c0ffda33304324d7">650350d</a></td><td>2026-08-27</td><td>First commit</td><td>chore: add planning directory to gitignore</td></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/RepoBrief/commit/8d019fdad6cfc4bb3c5ca436ee81454f81c1c14a">8d019fd</a></td><td>2026-08-31</td><td>Large change</td><td>feat: add regex-based secret detection engine</td></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/RepoBrief/commit/c2924e1d730af9e141e8e77a565f46d7d7db3975">c2924e1</a></td><td>2026-09-01</td><td>Large change</td><td>feat: add multi-factor file relevance scoring</td></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/RepoBrief/commit/0295952a5315e4fa87ceca385d796bc24f523d7d">0295952</a></td><td>2026-09-01</td><td>Large change</td><td>feat: add Markdown/XML/plain text formatters</td></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/RepoBrief/commit/63d35b9b4d56192be188f791a9cce3fdc1cdefd9">63d35b9</a></td><td>2026-09-01</td><td>Large change</td><td>feat: add click-based CLI with pack command</td></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/RepoBrief/commit/81bf9a450fab25479e82a352c502dba5b5d4a968">81bf9a4</a></td><td>2026-09-05</td><td>Latest commit</td><td>ci: trigger workflow on version tags</td></tr>
+  </table>
+  <p class="small">
+<b>Releases:</b> <a href="https://github.com/Saqlain-mushtaq-alamin/RepoBrief/releases/tag/v0.1.1">v0.1.1</a><br>  </p>
+  <p class="small"><a href="https://github.com/Saqlain-mushtaq-alamin/RepoBrief/commits?author=Saqlain-mushtaq-alamin">All commits by Saqlain-mushtaq-alamin in this repository</a></p>
+</section>
+<section class="project">
+  <h3><a href="https://github.com/Saqlain-mushtaq-alamin/ByteSpace-">ByteSpace-</a></h3>
+  <p class="purpose">Featuring immersive 3D glossy geometric visuals, Persian Blue and Electric Lime design tokens, interactive course players, multi-faceted catalog filtering, and split-screen authentication experiences.</p>
+  <div class="cols">
+    <div>
+      <table class="kv">
+        <tr><td>Languages</td><td>TypeScript 97%, CSS 2%, HTML 1%</td></tr>
+        <tr><td>Frameworks / tools</td><td>React, Tailwind CSS, Vite</td></tr>
+        <tr><td>Period</td><td>Sep 2026 to Oct 2026 (0.1 months)</td></tr>
+        <tr><td>Quality</td><td>30/100 &middot; README 5/5, Docs dir</td></tr>
+      </table>
+    </div>
+    <div>
+      <table class="kv">
+        <tr><td>Your commits</td><td>166 of 166 (100%)</td></tr>
+        <tr><td>Files modified</td><td>60</td></tr>
+        <tr><td>Additions / deletions</td><td>+6,708 / -2,429</td></tr>
+        <tr><td>Surviving lines</td><td>3,298 of 3,298 lines (100%)</td></tr>
+      </table>
+    </div>
+  </div>
+  <h4>Major development areas</h4>
+  <table class="bars">
+    <tr><td style="width:24%">UI</td><td><div class="bar"><i style="width:87.8%"></i></div></td><td class="r small muted" style="width:22%">88% &middot; 8,019 lines</td></tr>
+    <tr><td style="width:24%">Documentation</td><td><div class="bar"><i style="width:10.3%"></i></div></td><td class="r small muted" style="width:22%">10% &middot; 944 lines</td></tr>
+    <tr><td style="width:24%">Security</td><td><div class="bar"><i style="width:1.2%"></i></div></td><td class="r small muted" style="width:22%">1% &middot; 106 lines</td></tr>
+    <tr><td style="width:24%">Build &amp; Config</td><td><div class="bar"><i style="width:0.7%"></i></div></td><td class="r small muted" style="width:22%">1% &middot; 64 lines</td></tr>
+    <tr><td style="width:24%">Core Logic</td><td><div class="bar"><i style="width:0.0%"></i></div></td><td class="r small muted" style="width:22%">0% &middot; 2 lines</td></tr>
+    <tr><td style="width:24%">Other</td><td><div class="bar"><i style="width:0.0%"></i></div></td><td class="r small muted" style="width:22%">0% &middot; 2 lines</td></tr>
+  </table>
+  <p class="small muted">Commit types: feature 121, refactor 28, chore 11, docs 2, style 2, build 1, init 1</p>
+  <h4>Development timeline</h4>
+  <ul><li><b>Phase 1</b> (2026-09-29 to 2026-10-01, 166 commits): Feature development - UI, Documentation</li></ul>
+  <h4>Evidence</h4>
+  <div class="flags"><span class="yes">&#10003; Commits</span><span class="yes">&#10003; Pull requests</span><span class="no">&#10007; Releases</span><span class="no">&#10007; Issues</span><span class="yes">&#10003; Code changes</span><span class="yes">&#10003; History</span></div>
+  <table>
+    <tr><th>Commit</th><th>Date</th><th>Why it matters</th><th>Message</th></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/ByteSpace-/commit/d4e6d359b02efc48cfc36dc4c59697f5a214d577">d4e6d35</a></td><td>2026-09-29</td><td>First commit</td><td>docs: add ByteSpace project documentation</td></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/ByteSpace-/commit/f450c8c269bb735c11f46bf4e57698ef18ddafef">f450c8c</a></td><td>2026-09-30</td><td>Large change</td><td>feat: build course details page experience</td></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/ByteSpace-/commit/04c3888f8ea43b5717896656570d7864e1e47bfa">04c3888</a></td><td>2026-09-30</td><td>Large change</td><td>feat: build course lessons and progress page</td></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/ByteSpace-/commit/adab6ed87a45fd37e522afcd6b44a58029fda8ef">adab6ed</a></td><td>2026-10-01</td><td>Large change</td><td>refactor: update course lessons and learning experience</td></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/ByteSpace-/commit/09d5d568748bfd31a911733e91cce42bafef9631">09d5d56</a></td><td>2026-10-01</td><td>Large change</td><td>refactor: update course details page experience</td></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/ByteSpace-/commit/23b7061aad35558b48c19cc452c6787b21fd5a78">23b7061</a></td><td>2026-10-01</td><td>Latest commit</td><td>style: redesign 404 page to match Figma</td></tr>
+  </table>
+  <p class="small">
+<b>Pull requests:</b> <a href="https://github.com/Saqlain-mushtaq-alamin/ByteSpace-/pull/1">#1 Build ByteSpace landing page, login and signup </a> (merged); <a href="https://github.com/Saqlain-mushtaq-alamin/ByteSpace-/pull/2">#2 Redesign 404 page</a> (merged)  </p>
+  <p class="small"><a href="https://github.com/Saqlain-mushtaq-alamin/ByteSpace-/commits?author=Saqlain-mushtaq-alamin">All commits by Saqlain-mushtaq-alamin in this repository</a></p>
+</section>
+<section class="project">
+  <h3><a href="https://github.com/Saqlain-mushtaq-alamin/envobyte-monica-favorites">envobyte-monica-favorites</a></h3>
+  <p class="purpose">1. Overview 2. Project Structure 3. Setup Instructions 4. Running the Server 5. API Reference 6. Running Tests 7. Implementation Approach 8. Assumptions 9. Limitations &amp; Trade-offs</p>
+  <div class="cols">
+    <div>
+      <table class="kv">
+        <tr><td>Languages</td><td>Python 100%</td></tr>
+        <tr><td>Frameworks / tools</td><td>FastAPI, Pydantic, SQLAlchemy, pytest</td></tr>
+        <tr><td>Period</td><td>Jul 2026 to Jul 2026 (0.0 months)</td></tr>
+        <tr><td>Quality</td><td>45/100 &middot; README 4/5, Tests</td></tr>
+      </table>
+    </div>
+    <div>
+      <table class="kv">
+        <tr><td>Your commits</td><td>7 of 7 (100%)</td></tr>
+        <tr><td>Files modified</td><td>23</td></tr>
+        <tr><td>Additions / deletions</td><td>+2,292 / -0</td></tr>
+        <tr><td>Surviving lines</td><td>1,847 of 1,847 lines (100%)</td></tr>
+      </table>
+    </div>
+  </div>
+  <h4>Major development areas</h4>
+  <table class="bars">
+    <tr><td style="width:24%">Backend/API</td><td><div class="bar"><i style="width:23.0%"></i></div></td><td class="r small muted" style="width:22%">23% &middot; 527 lines</td></tr>
+    <tr><td style="width:24%">Testing</td><td><div class="bar"><i style="width:17.6%"></i></div></td><td class="r small muted" style="width:22%">18% &middot; 403 lines</td></tr>
+    <tr><td style="width:24%">Core Logic</td><td><div class="bar"><i style="width:16.7%"></i></div></td><td class="r small muted" style="width:22%">17% &middot; 383 lines</td></tr>
+    <tr><td style="width:24%">Documentation</td><td><div class="bar"><i style="width:16.3%"></i></div></td><td class="r small muted" style="width:22%">16% &middot; 374 lines</td></tr>
+    <tr><td style="width:24%">Database</td><td><div class="bar"><i style="width:8.6%"></i></div></td><td class="r small muted" style="width:22%">9% &middot; 196 lines</td></tr>
+    <tr><td style="width:24%">Security</td><td><div class="bar"><i style="width:7.8%"></i></div></td><td class="r small muted" style="width:22%">8% &middot; 178 lines</td></tr>
+  </table>
+  <p class="small muted">Commit types: feature 3, chore 2, docs 1, test 1</p>
+  <h4>Development timeline</h4>
+  <ul><li><b>Phase 1</b> (2026-07-08 to 2026-07-08, 7 commits): Feature development - Backend/API, Documentation</li></ul>
+  <h4>Evidence</h4>
+  <div class="flags"><span class="yes">&#10003; Commits</span><span class="no">&#10007; Pull requests</span><span class="no">&#10007; Releases</span><span class="no">&#10007; Issues</span><span class="yes">&#10003; Code changes</span><span class="no">&#10007; History</span></div>
+  <table>
+    <tr><th>Commit</th><th>Date</th><th>Why it matters</th><th>Message</th></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/envobyte-monica-favorites/commit/9416f8f424a3228766c243beae5a53122a4e1008">9416f8f</a></td><td>2026-07-08</td><td>First commit</td><td>docs: add README, assumptions, and seed script</td></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/envobyte-monica-favorites/commit/d8b4687f48fb8511745b557d497645bfb7f9c1a9">d8b4687</a></td><td>2026-07-08</td><td>Large change</td><td>feat: favorite, note, and stats endpoints with search/filter</td></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/envobyte-monica-favorites/commit/4243b21a630cb273b9aff868c980d87d8c010bad">4243b21</a></td><td>2026-07-08</td><td>Large change</td><td>feat: database schema (account, vault, contact, favorites)</td></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/envobyte-monica-favorites/commit/ebf6ce0eb43b3af174f1e20fe933125f5b3da176">ebf6ce0</a></td><td>2026-07-08</td><td>Large change</td><td>feat: JWT authentication and user registration</td></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/envobyte-monica-favorites/commit/2c16e4702017c85a97ea6f99678ab8ecaabebace">2c16e47</a></td><td>2026-07-08</td><td>Latest commit</td><td>chore: add project configuration and package initialization files</td></tr>
+  </table>
+  <p class="small"><a href="https://github.com/Saqlain-mushtaq-alamin/envobyte-monica-favorites/commits?author=Saqlain-mushtaq-alamin">All commits by Saqlain-mushtaq-alamin in this repository</a></p>
+</section>
+<section class="project">
+  <h3><a href="https://github.com/Saqlain-mushtaq-alamin/NearShare">NearShare</a></h3>
+  <p class="purpose">A file-transfer app that moves files phone-to-phone (and phone-to-PC) with no internet, no account, no ads, and no cloud servers.</p>
+  <div class="cols">
+    <div>
+      <table class="kv">
+        <tr><td>Languages</td><td>C++ 53%, C 22%, Kotlin 11%, Dart 8%, Swift 6%</td></tr>
+        <tr><td>Frameworks / tools</td><td>CMake, GitHub Actions, Dio, Flutter, Riverpod</td></tr>
+        <tr><td>Period</td><td>Sep 2026 to Sep 2026 (0.2 months)</td></tr>
+        <tr><td>Quality</td><td>55/100 &middot; README 2/5, Tests, CI, Lint config</td></tr>
+      </table>
+    </div>
+    <div>
+      <table class="kv">
+        <tr><td>Your commits</td><td>163 of 163 (100%)</td></tr>
+        <tr><td>Files modified</td><td>125</td></tr>
+        <tr><td>Additions / deletions</td><td>+5,314 / -0</td></tr>
+        <tr><td>Surviving lines</td><td>889 of 889 lines (100%)</td></tr>
+      </table>
+    </div>
+  </div>
+  <h4>Major development areas</h4>
+  <table class="bars">
+    <tr><td style="width:24%">Documentation</td><td><div class="bar"><i style="width:43.6%"></i></div></td><td class="r small muted" style="width:22%">44% &middot; 2,317 lines</td></tr>
+    <tr><td style="width:24%">Platform Integration</td><td><div class="bar"><i style="width:37.0%"></i></div></td><td class="r small muted" style="width:22%">37% &middot; 1,967 lines</td></tr>
+    <tr><td style="width:24%">Build &amp; Config</td><td><div class="bar"><i style="width:10.0%"></i></div></td><td class="r small muted" style="width:22%">10% &middot; 534 lines</td></tr>
+    <tr><td style="width:24%">Testing</td><td><div class="bar"><i style="width:5.2%"></i></div></td><td class="r small muted" style="width:22%">5% &middot; 275 lines</td></tr>
+    <tr><td style="width:24%">UI</td><td><div class="bar"><i style="width:2.1%"></i></div></td><td class="r small muted" style="width:22%">2% &middot; 113 lines</td></tr>
+    <tr><td style="width:24%">Other</td><td><div class="bar"><i style="width:0.7%"></i></div></td><td class="r small muted" style="width:22%">1% &middot; 39 lines</td></tr>
+  </table>
+  <p class="small muted">Commit types: feature 86, chore 45, build 14, docs 13, test 4, ci 1</p>
+  <h4>Development timeline</h4>
+  <ul><li><b>Phase 1</b> (2026-09-07 to 2026-09-13, 163 commits): Feature development - Documentation, Platform Integration</li></ul>
+  <h4>Evidence</h4>
+  <div class="flags"><span class="yes">&#10003; Commits</span><span class="no">&#10007; Pull requests</span><span class="no">&#10007; Releases</span><span class="no">&#10007; Issues</span><span class="yes">&#10003; Code changes</span><span class="yes">&#10003; History</span></div>
+  <table>
+    <tr><th>Commit</th><th>Date</th><th>Why it matters</th><th>Message</th></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/NearShare/commit/013ed8215ec484a24028949af1aaac82b0ead124">013ed82</a></td><td>2026-09-07</td><td>First commit</td><td>build: define NearShare Flutter dependencies</td></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/NearShare/commit/c21b5911cf9bcc0f4a610c8cfa7c95641d145352">c21b591</a></td><td>2026-09-10</td><td>Large change</td><td>macos: configure application menu</td></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/NearShare/commit/dbb43dcf68cb78ba0a17f1df8fd76dc3ef2f2161">dbb43dc</a></td><td>2026-09-11</td><td>Large change</td><td>ios: configure application icon assets</td></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/NearShare/commit/e45afb016096d7d96670a331d784be36142bc2fe">e45afb0</a></td><td>2026-09-13</td><td>Large change</td><td>windows: configure application resources</td></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/NearShare/commit/ab0e5ff1cc809f3ecaa9326af050ce71d9c3a749">ab0e5ff</a></td><td>2026-09-13</td><td>Large change</td><td>windows: implement Win32 application window</td></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/NearShare/commit/3f0f79879d7cf9a7585fa1af8c0fd16d1e4e4f1c">3f0f798</a></td><td>2026-09-13</td><td>Latest commit</td><td>macos: configure application metadata</td></tr>
+  </table>
+  <p class="small"><a href="https://github.com/Saqlain-mushtaq-alamin/NearShare/commits?author=Saqlain-mushtaq-alamin">All commits by Saqlain-mushtaq-alamin in this repository</a></p>
+</section>
+<section class="project">
+  <h3><a href="https://github.com/Saqlain-mushtaq-alamin/pptx2pdf_app">pptx2pdf_app</a></h3>
+  <p class="purpose">PPTX → PDF Drag-and-Drop Converter (runs locally on your Windows PC)</p>
+  <div class="cols">
+    <div>
+      <table class="kv">
+        <tr><td>Languages</td><td>HTML 76%, Python 24%</td></tr>
+        <tr><td>Frameworks / tools</td><td>none detected</td></tr>
+        <tr><td>Period</td><td>Jun 2026 to Jul 2026 (0.2 months)</td></tr>
+        <tr><td>Quality</td><td>15/100 &middot; README 1/5, License</td></tr>
+      </table>
+    </div>
+    <div>
+      <table class="kv">
+        <tr><td>Your commits</td><td>5 of 5 (100%)</td></tr>
+        <tr><td>Files modified</td><td>4</td></tr>
+        <tr><td>Additions / deletions</td><td>+1,350 / -193</td></tr>
+        <tr><td>Surviving lines</td><td>1,064 of 1,064 lines (100%)</td></tr>
+      </table>
+    </div>
+  </div>
+  <h4>Major development areas</h4>
+  <table class="bars">
+    <tr><td style="width:24%">UI</td><td><div class="bar"><i style="width:69.4%"></i></div></td><td class="r small muted" style="width:22%">69% &middot; 1,071 lines</td></tr>
+    <tr><td style="width:24%">Core Logic</td><td><div class="bar"><i style="width:24.6%"></i></div></td><td class="r small muted" style="width:22%">25% &middot; 379 lines</td></tr>
+    <tr><td style="width:24%">Documentation</td><td><div class="bar"><i style="width:6.0%"></i></div></td><td class="r small muted" style="width:22%">6% &middot; 93 lines</td></tr>
+  </table>
+  <p class="small muted">Commit types: docs 1, init 1, build 1, feature 1, fix 1</p>
+  <h4>Development timeline</h4>
+  <ul><li><b>Phase 1</b> (2026-06-30 to 2026-07-06, 5 commits): Project setup &amp; foundations - UI, Core Logic</li></ul>
+  <h4>Evidence</h4>
+  <div class="flags"><span class="yes">&#10003; Commits</span><span class="no">&#10007; Pull requests</span><span class="no">&#10007; Releases</span><span class="no">&#10007; Issues</span><span class="yes">&#10003; Code changes</span><span class="yes">&#10003; History</span></div>
+  <table>
+    <tr><th>Commit</th><th>Date</th><th>Why it matters</th><th>Message</th></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/pptx2pdf_app/commit/01a5b66a94fd621b6a72d5b8c4dc283345ab5ea9">01a5b66</a></td><td>2026-06-30</td><td>First commit</td><td>Initial commit</td></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/pptx2pdf_app/commit/b47a80cc5795be73bcbbee1158e2afbb182ca258">b47a80c</a></td><td>2026-07-06</td><td>Large change</td><td>update the index and make it more advance</td></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/pptx2pdf_app/commit/040282492ef6862901c60b4b3738ac96847f4547">0402824</a></td><td>2026-07-06</td><td>Large change</td><td> fixed some error</td></tr>
+  </table>
+  <p class="small"><a href="https://github.com/Saqlain-mushtaq-alamin/pptx2pdf_app/commits?author=Saqlain-mushtaq-alamin">All commits by Saqlain-mushtaq-alamin in this repository</a></p>
+</section>
+<section class="project">
+  <h3><a href="https://github.com/Saqlain-mushtaq-alamin/driftlock">driftlock</a></h3>
+  <p class="purpose">memory protection</p>
+  <div class="cols">
+    <div>
+      <table class="kv">
+        <tr><td>Languages</td><td>Python 100%</td></tr>
+        <tr><td>Frameworks / tools</td><td>none detected</td></tr>
+        <tr><td>Period</td><td>May 2026 to May 2026 (0.0 months)</td></tr>
+        <tr><td>Quality</td><td>10/100 &middot; README 0/5, License</td></tr>
+      </table>
+    </div>
+    <div>
+      <table class="kv">
+        <tr><td>Your commits</td><td>11 of 11 (100%)</td></tr>
+        <tr><td>Files modified</td><td>21</td></tr>
+        <tr><td>Additions / deletions</td><td>+946 / -14</td></tr>
+        <tr><td>Surviving lines</td><td>878 of 878 lines (100%)</td></tr>
+      </table>
+    </div>
+  </div>
+  <h4>Major development areas</h4>
+  <table class="bars">
+    <tr><td style="width:24%">ML/Data</td><td><div class="bar"><i style="width:94.2%"></i></div></td><td class="r small muted" style="width:22%">94% &middot; 904 lines</td></tr>
+    <tr><td style="width:24%">Build &amp; Config</td><td><div class="bar"><i style="width:3.4%"></i></div></td><td class="r small muted" style="width:22%">3% &middot; 33 lines</td></tr>
+    <tr><td style="width:24%">Documentation</td><td><div class="bar"><i style="width:2.4%"></i></div></td><td class="r small muted" style="width:22%">2% &middot; 23 lines</td></tr>
+    <tr><td style="width:24%">Security</td><td><div class="bar"><i style="width:0.0%"></i></div></td><td class="r small muted" style="width:22%">0% &middot; 0 lines</td></tr>
+    <tr><td style="width:24%">Core Logic</td><td><div class="bar"><i style="width:0.0%"></i></div></td><td class="r small muted" style="width:22%">0% &middot; 0 lines</td></tr>
+  </table>
+  <p class="small muted">Commit types: feature 5, build 3, docs 1, chore 1, fix 1</p>
+  <h4>Development timeline</h4>
+  <ul><li><b>Phase 1</b> (2026-05-26 to 2026-05-27, 11 commits): Feature development - ML/Data, Documentation</li></ul>
+  <h4>Evidence</h4>
+  <div class="flags"><span class="yes">&#10003; Commits</span><span class="no">&#10007; Pull requests</span><span class="no">&#10007; Releases</span><span class="no">&#10007; Issues</span><span class="yes">&#10003; Code changes</span><span class="no">&#10007; History</span></div>
+  <table>
+    <tr><th>Commit</th><th>Date</th><th>Why it matters</th><th>Message</th></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/driftlock/commit/06d912136df5bca11d51ba0f15c79dd068ab40a6">06d9121</a></td><td>2026-05-26</td><td>First commit</td><td>Initial commit</td></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/driftlock/commit/2183afcb76099469a95df2565507ec6d457769df">2183afc</a></td><td>2026-05-26</td><td>Large change</td><td>add the step0_inspect_daataset py file for inspect the dataset</td></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/driftlock/commit/29afbaeb5c310caaef3364b726306b08372e4a19">29afbae</a></td><td>2026-05-26</td><td>Large change</td><td>add the step1 purpose_ a code for preprose the data</td></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/driftlock/commit/1a374db68c602bdfca7abcad76174e53393f78bf">1a374db</a></td><td>2026-05-27</td><td>Large change</td><td>update column_config and step2_purpose_b to include additional attack categories and enhance seed corpus generation</td></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/driftlock/commit/9703bae2b603ae62841d39ee2a86ebaee6b97150">9703bae</a></td><td>2026-05-27</td><td>Large change</td><td>fixed some problem in the step2 purpose_b</td></tr>
+  </table>
+  <p class="small"><a href="https://github.com/Saqlain-mushtaq-alamin/driftlock/commits?author=Saqlain-mushtaq-alamin">All commits by Saqlain-mushtaq-alamin in this repository</a></p>
+</section>
+<section class="project">
+  <h3><a href="https://github.com/Saqlain-mushtaq-alamin/britannica">britannica</a></h3>
+  <p class="purpose">No description available.</p>
+  <div class="cols">
+    <div>
+      <table class="kv">
+        <tr><td>Languages</td><td>HTML 54%, CSS 46%</td></tr>
+        <tr><td>Frameworks / tools</td><td>none detected</td></tr>
+        <tr><td>Period</td><td>Jan 2025 to Jan 2025 (0.0 months)</td></tr>
+        <tr><td>Quality</td><td>0/100 &middot; README 0/5</td></tr>
+      </table>
+    </div>
+    <div>
+      <table class="kv">
+        <tr><td>Your commits</td><td>1 of 1 (100%)</td></tr>
+        <tr><td>Files modified</td><td>3</td></tr>
+        <tr><td>Additions / deletions</td><td>+595 / -0</td></tr>
+        <tr><td>Surviving lines</td><td>595 of 595 lines (100%)</td></tr>
+      </table>
+    </div>
+  </div>
+  <h4>Major development areas</h4>
+  <table class="bars">
+    <tr><td style="width:24%">UI</td><td><div class="bar"><i style="width:100.0%"></i></div></td><td class="r small muted" style="width:22%">100% &middot; 595 lines</td></tr>
+    <tr><td style="width:24%">Other</td><td><div class="bar"><i style="width:0.0%"></i></div></td><td class="r small muted" style="width:22%">0% &middot; 0 lines</td></tr>
+  </table>
+  <p class="small muted">Commit types: docs 1</p>
+  <h4>Development timeline</h4>
+  <ul><li><b>Phase 1</b> (2025-01-08 to 2025-01-08, 1 commits): Testing, documentation &amp; tooling - UI</li></ul>
+  <h4>Evidence</h4>
+  <div class="flags"><span class="yes">&#10003; Commits</span><span class="no">&#10007; Pull requests</span><span class="no">&#10007; Releases</span><span class="no">&#10007; Issues</span><span class="yes">&#10003; Code changes</span><span class="no">&#10007; History</span></div>
+  <table>
+    <tr><th>Commit</th><th>Date</th><th>Why it matters</th><th>Message</th></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/britannica/commit/b3072f54676388a15d804540366f98f0932eefed">b3072f5</a></td><td>2025-01-08</td><td>First commit</td><td> this inital comment when almost 50% of work done</td></tr>
+  </table>
+  <p class="small"><a href="https://github.com/Saqlain-mushtaq-alamin/britannica/commits?author=Saqlain-mushtaq-alamin">All commits by Saqlain-mushtaq-alamin in this repository</a></p>
+</section>
+<section class="project">
+  <h3><a href="https://github.com/Saqlain-mushtaq-alamin/Computer_Graphics_Lab">Computer_Graphics_Lab</a></h3>
+  <p class="purpose">This repository holds all lab programs written in C/C++ using the graphics.h library.</p>
+  <div class="cols">
+    <div>
+      <table class="kv">
+        <tr><td>Languages</td><td>C++ 94%, PowerShell 6%</td></tr>
+        <tr><td>Frameworks / tools</td><td>none detected</td></tr>
+        <tr><td>Period</td><td>Mar 2026 to Apr 2026 (1.5 months)</td></tr>
+        <tr><td>Quality</td><td>20/100 &middot; README 4/5</td></tr>
+      </table>
+    </div>
+    <div>
+      <table class="kv">
+        <tr><td>Your commits</td><td>10 of 10 (100%)</td></tr>
+        <tr><td>Files modified</td><td>17</td></tr>
+        <tr><td>Additions / deletions</td><td>+709 / -11</td></tr>
+        <tr><td>Surviving lines</td><td>549 of 549 lines (100%)</td></tr>
+      </table>
+    </div>
+  </div>
+  <h4>Major development areas</h4>
+  <table class="bars">
+    <tr><td style="width:24%">Core Logic</td><td><div class="bar"><i style="width:78.5%"></i></div></td><td class="r small muted" style="width:22%">78% &middot; 565 lines</td></tr>
+    <tr><td style="width:24%">Documentation</td><td><div class="bar"><i style="width:12.4%"></i></div></td><td class="r small muted" style="width:22%">12% &middot; 89 lines</td></tr>
+    <tr><td style="width:24%">Other</td><td><div class="bar"><i style="width:7.1%"></i></div></td><td class="r small muted" style="width:22%">7% &middot; 51 lines</td></tr>
+    <tr><td style="width:24%">Build &amp; Config</td><td><div class="bar"><i style="width:2.1%"></i></div></td><td class="r small muted" style="width:22%">2% &middot; 15 lines</td></tr>
+  </table>
+  <p class="small muted">Commit types: feature 6, docs 2, init 1, build 1</p>
+  <h4>Development timeline</h4>
+  <ul><li><b>Phase 1</b> (2026-03-12 to 2026-03-12, 6 commits): Project setup &amp; foundations - Core Logic, Documentation</li><li><b>Phase 2</b> (2026-04-23 to 2026-04-27, 4 commits): Feature development - Core Logic</li></ul>
+  <h4>Evidence</h4>
+  <div class="flags"><span class="yes">&#10003; Commits</span><span class="yes">&#10003; Pull requests</span><span class="no">&#10007; Releases</span><span class="no">&#10007; Issues</span><span class="yes">&#10003; Code changes</span><span class="yes">&#10003; History</span></div>
+  <table>
+    <tr><th>Commit</th><th>Date</th><th>Why it matters</th><th>Message</th></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/Computer_Graphics_Lab/commit/f71d3b5a3501d4bfc115be099d59c93411be5bf4">f71d3b5</a></td><td>2026-03-12</td><td>First commit</td><td>Initial commit</td></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/Computer_Graphics_Lab/commit/870f155493fc8488b94bc431dd36d625c3855902">870f155</a></td><td>2026-03-12</td><td>Large change</td><td>Remove main.cpp and add DDA and Bresenham line drawing implementations</td></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/Computer_Graphics_Lab/commit/1c00218833f5e7b86c2412a90b85520b53c5c8cf">1c00218</a></td><td>2026-03-12</td><td>Large change</td><td>Add circle drawing implementation in main.cpp</td></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/Computer_Graphics_Lab/commit/f7c94efc42b631ab6da27a5d7fc2830f183134be">f7c94ef</a></td><td>2026-03-12</td><td>Large change</td><td>Add tst1.cpp and tst2.cpp for graphics drawing implementations</td></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/Computer_Graphics_Lab/commit/ceff24e1e1c14039843aabd6c45ccb817c5c74e9">ceff24e</a></td><td>2026-04-27</td><td>Large change</td><td>Add main.cpp for Bezier curve drawing implementation</td></tr>
+  </table>
+  <p class="small">
+<b>Pull requests:</b> <a href="https://github.com/Saqlain-mushtaq-alamin/Computer_Graphics_Lab/pull/1">#1 Add Computer Graphics Lab implementations (Labs 01–10)</a>  </p>
+  <p class="small"><a href="https://github.com/Saqlain-mushtaq-alamin/Computer_Graphics_Lab/commits?author=Saqlain-mushtaq-alamin">All commits by Saqlain-mushtaq-alamin in this repository</a></p>
+</section>
+<section class="project">
+  <h3><a href="https://github.com/Saqlain-mushtaq-alamin/DRIFT-X">DRIFT-X</a></h3>
+  <p class="purpose">No description available.</p>
+  <div class="cols">
+    <div>
+      <table class="kv">
+        <tr><td>Languages</td><td>n/a</td></tr>
+        <tr><td>Frameworks / tools</td><td>Docker, Make</td></tr>
+        <tr><td>Period</td><td>Aug 2026 to Sep 2026 (1.7 months)</td></tr>
+        <tr><td>Quality</td><td>10/100 &middot; README 0/5, License</td></tr>
+      </table>
+    </div>
+    <div>
+      <table class="kv">
+        <tr><td>Your commits</td><td>104 of 104 (100%)</td></tr>
+        <tr><td>Files modified</td><td>90</td></tr>
+        <tr><td>Additions / deletions</td><td>+7,018 / -158</td></tr>
+        <tr><td>Surviving lines</td><td>0 of 0 lines</td></tr>
+      </table>
+    </div>
+  </div>
+  <h4>Major development areas</h4>
+  <table class="bars">
+    <tr><td style="width:24%">Core Logic</td><td><div class="bar"><i style="width:36.6%"></i></div></td><td class="r small muted" style="width:22%">37% &middot; 2,627 lines</td></tr>
+    <tr><td style="width:24%">ML/Data</td><td><div class="bar"><i style="width:31.0%"></i></div></td><td class="r small muted" style="width:22%">31% &middot; 2,226 lines</td></tr>
+    <tr><td style="width:24%">Testing</td><td><div class="bar"><i style="width:16.8%"></i></div></td><td class="r small muted" style="width:22%">17% &middot; 1,208 lines</td></tr>
+    <tr><td style="width:24%">Documentation</td><td><div class="bar"><i style="width:6.4%"></i></div></td><td class="r small muted" style="width:22%">6% &middot; 456 lines</td></tr>
+    <tr><td style="width:24%">Security</td><td><div class="bar"><i style="width:2.9%"></i></div></td><td class="r small muted" style="width:22%">3% &middot; 208 lines</td></tr>
+    <tr><td style="width:24%">Backend/API</td><td><div class="bar"><i style="width:2.6%"></i></div></td><td class="r small muted" style="width:22%">3% &middot; 186 lines</td></tr>
+  </table>
+  <p class="small muted">Commit types: feature 42, test 24, chore 13, fix 13, docs 6, build 6</p>
+  <h4>Development timeline</h4>
+  <ul><li><b>Phase 1</b> (2026-08-03 to 2026-08-19, 76 commits): Mixed development - Core Logic, ML/Data</li><li><b>Phase 2</b> (2026-09-23 to 2026-09-23, 28 commits): Feature development - ML/Data, Core Logic</li></ul>
+  <h4>Evidence</h4>
+  <div class="flags"><span class="yes">&#10003; Commits</span><span class="no">&#10007; Pull requests</span><span class="no">&#10007; Releases</span><span class="no">&#10007; Issues</span><span class="yes">&#10003; Code changes</span><span class="yes">&#10003; History</span></div>
+  <table>
+    <tr><th>Commit</th><th>Date</th><th>Why it matters</th><th>Message</th></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/DRIFT-X/commit/161068a85a8f5926f4de7b08a60c59080abe5963">161068a</a></td><td>2026-08-03</td><td>First commit</td><td>Initial commit</td></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/DRIFT-X/commit/960944048c08e559b59af4670e0fed2b911d6ff6">9609440</a></td><td>2026-08-10</td><td>Large change</td><td>feat(experiment): implement experiment orchestration runner</td></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/DRIFT-X/commit/38233e0d92416145ee0bb44cafcd3128ff07d75a">38233e0</a></td><td>2026-08-18</td><td>Large change</td><td>feat(viz): implement experiment result visualization and paper figures</td></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/DRIFT-X/commit/b771e7f9b1af10696656d0d71e0cdc52a2053921">b771e7f</a></td><td>2026-09-23</td><td>Large change</td><td>feat(serving): add FastAPI model serving API</td></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/DRIFT-X/commit/a98e9a74409772f2f528c6f98136b14e0d1caa11">a98e9a7</a></td><td>2026-09-23</td><td>Large change</td><td>feat(data): extend dataset download workflow</td></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/DRIFT-X/commit/557bfdd55a6441f8c52a96af3d126a1d3c53ab97">557bfdd</a></td><td>2026-09-23</td><td>Latest commit</td><td>docs: add comprehensive summary of completed DRIFT-X project phases</td></tr>
+  </table>
+  <p class="small"><a href="https://github.com/Saqlain-mushtaq-alamin/DRIFT-X/commits?author=Saqlain-mushtaq-alamin">All commits by Saqlain-mushtaq-alamin in this repository</a></p>
+</section>
+<section class="project">
+  <h3><a href="https://github.com/Saqlain-mushtaq-alamin/snakegame">snakegame</a></h3>
+  <p class="purpose">No description available.</p>
+  <div class="cols">
+    <div>
+      <table class="kv">
+        <tr><td>Languages</td><td>Java 100%</td></tr>
+        <tr><td>Frameworks / tools</td><td>none detected</td></tr>
+        <tr><td>Period</td><td>Jan 2025 to May 2025 (4.0 months)</td></tr>
+        <tr><td>Quality</td><td>10/100 &middot; README 0/5, License</td></tr>
+      </table>
+    </div>
+    <div>
+      <table class="kv">
+        <tr><td>Your commits</td><td>5 of 5 (100%)</td></tr>
+        <tr><td>Files modified</td><td>7</td></tr>
+        <tr><td>Additions / deletions</td><td>+426 / -7</td></tr>
+        <tr><td>Surviving lines</td><td>362 of 362 lines (100%)</td></tr>
+      </table>
+    </div>
+  </div>
+  <h4>Major development areas</h4>
+  <table class="bars">
+    <tr><td style="width:24%">Core Logic</td><td><div class="bar"><i style="width:86.8%"></i></div></td><td class="r small muted" style="width:22%">87% &middot; 376 lines</td></tr>
+    <tr><td style="width:24%">Other</td><td><div class="bar"><i style="width:7.6%"></i></div></td><td class="r small muted" style="width:22%">8% &middot; 33 lines</td></tr>
+    <tr><td style="width:24%">Documentation</td><td><div class="bar"><i style="width:5.5%"></i></div></td><td class="r small muted" style="width:22%">6% &middot; 24 lines</td></tr>
+  </table>
+  <p class="small muted">Commit types: feature 3, docs 2</p>
+  <h4>Development timeline</h4>
+  <ul><li><b>Phase 1</b> (2025-01-07 to 2025-05-10, 5 commits): Feature development - Core Logic, Documentation</li></ul>
+  <h4>Evidence</h4>
+  <div class="flags"><span class="yes">&#10003; Commits</span><span class="no">&#10007; Pull requests</span><span class="no">&#10007; Releases</span><span class="no">&#10007; Issues</span><span class="yes">&#10003; Code changes</span><span class="yes">&#10003; History</span></div>
+  <table>
+    <tr><th>Commit</th><th>Date</th><th>Why it matters</th><th>Message</th></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/snakegame/commit/9fe91224b7ca0dac093082c17d7899add719247b">9fe9122</a></td><td>2025-01-07</td><td>First commit</td><td>Add files via upload</td></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/snakegame/commit/51de5ea2bc8e58d3216806e13662954a20342f79">51de5ea</a></td><td>2025-01-07</td><td>Large change</td><td>add the on start botttun</td></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/snakegame/commit/94d8af8f81bf08c473e797dccea8ff0c27568e47">94d8af8</a></td><td>2025-01-07</td><td>Large change</td><td>add some laval changes conditions</td></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/snakegame/commit/23f01561955181b0b69dcb91f84b427478d898dc">23f0156</a></td><td>2025-05-10</td><td>Latest commit</td><td>Create LICENSE</td></tr>
+  </table>
+  <p class="small"><a href="https://github.com/Saqlain-mushtaq-alamin/snakegame/commits?author=Saqlain-mushtaq-alamin">All commits by Saqlain-mushtaq-alamin in this repository</a></p>
+</section>
+<section class="project">
+  <h3><a href="https://github.com/Saqlain-mushtaq-alamin/wifi-strength-scanner">wifi-strength-scanner</a></h3>
+  <p class="purpose">A comprehensive tool for scanning and visualizing WiFi signal strength with heatmap generation.</p>
+  <div class="cols">
+    <div>
+      <table class="kv">
+        <tr><td>Languages</td><td>Python 100%</td></tr>
+        <tr><td>Frameworks / tools</td><td>none detected</td></tr>
+        <tr><td>Period</td><td>Dec 2025 to Dec 2025 (0.2 months)</td></tr>
+        <tr><td>Quality</td><td>45/100 &middot; README 2/5, Tests, License</td></tr>
+      </table>
+    </div>
+    <div>
+      <table class="kv">
+        <tr><td>Your commits</td><td>71 of 111 (64%)</td></tr>
+        <tr><td>Files modified</td><td>14</td></tr>
+        <tr><td>Additions / deletions</td><td>+3,974 / -754</td></tr>
+        <tr><td>Surviving lines</td><td>0 of 245 lines (0%)</td></tr>
+      </table>
+    </div>
+  </div>
+  <h4>Major development areas</h4>
+  <table class="bars">
+    <tr><td style="width:24%">UI</td><td><div class="bar"><i style="width:86.4%"></i></div></td><td class="r small muted" style="width:22%">86% &middot; 4,084 lines</td></tr>
+    <tr><td style="width:24%">Testing</td><td><div class="bar"><i style="width:8.3%"></i></div></td><td class="r small muted" style="width:22%">8% &middot; 392 lines</td></tr>
+    <tr><td style="width:24%">Documentation</td><td><div class="bar"><i style="width:4.4%"></i></div></td><td class="r small muted" style="width:22%">4% &middot; 206 lines</td></tr>
+    <tr><td style="width:24%">Core Logic</td><td><div class="bar"><i style="width:0.9%"></i></div></td><td class="r small muted" style="width:22%">1% &middot; 42 lines</td></tr>
+    <tr><td style="width:24%">Build &amp; Config</td><td><div class="bar"><i style="width:0.1%"></i></div></td><td class="r small muted" style="width:22%">0% &middot; 4 lines</td></tr>
+  </table>
+  <p class="small muted">Commit types: feature 54, refactor 8, docs 4, fix 4, init 1</p>
+  <h4>Development timeline</h4>
+  <ul><li><b>Phase 1</b> (2025-12-03 to 2025-12-09, 71 commits): Project setup &amp; foundations - UI, Testing</li></ul>
+  <h4>Evidence</h4>
+  <div class="flags"><span class="yes">&#10003; Commits</span><span class="no">&#10007; Pull requests</span><span class="no">&#10007; Releases</span><span class="no">&#10007; Issues</span><span class="yes">&#10003; Code changes</span><span class="yes">&#10003; History</span></div>
+  <table>
+    <tr><th>Commit</th><th>Date</th><th>Why it matters</th><th>Message</th></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/wifi-strength-scanner/commit/18962afde075da945a394567a5965139d9b2ce3f">18962af</a></td><td>2025-12-03</td><td>First commit</td><td>Initial commit</td></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/wifi-strength-scanner/commit/e947e51827b47c2786a02145bb6dad1252d67c06">e947e51</a></td><td>2025-12-05</td><td>Large change</td><td>feat: enhance ScanPage with header, control panel, and image preview functionality</td></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/wifi-strength-scanner/commit/57476d5dd41390655e07822353015fb603ed64e4">57476d5</a></td><td>2025-12-05</td><td>Large change</td><td>feat: enhance ScanPage with header, control panel, and image preview functionality</td></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/wifi-strength-scanner/commit/2ca2f3260ba607d76946983f42ae4eafb7445659">2ca2f32</a></td><td>2025-12-09</td><td>Large change</td><td>feat: implement SpeedTestPage and update MainWindow to integrate speed test functionality</td></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/wifi-strength-scanner/commit/9fae88a278ff55a5678696d231bb35b1659447b4">9fae88a</a></td><td>2025-12-09</td><td>Large change</td><td>feat: implement SpeedTestPage and update MainWindow to integrate speed test functionality</td></tr>
+  </table>
+  <p class="small"><a href="https://github.com/Saqlain-mushtaq-alamin/wifi-strength-scanner/commits?author=Saqlain-mushtaq-alamin">All commits by Saqlain-mushtaq-alamin in this repository</a></p>
+</section>
+<section class="project">
+  <h3><a href="https://github.com/Saqlain-mushtaq-alamin/Finura-v1.2">Finura-v1.2</a></h3>
+  <p class="purpose">AI-Powered Personal Finance Assistant</p>
+  <div class="cols">
+    <div>
+      <table class="kv">
+        <tr><td>Languages</td><td>Dart 76%, Python 11%, C++ 8%, C 2%, Kotlin 1%</td></tr>
+        <tr><td>Frameworks / tools</td><td>CMake, Firebase, Flutter</td></tr>
+        <tr><td>Period</td><td>Sep 2025 to Jan 2026 (3.6 months)</td></tr>
+        <tr><td>Quality</td><td>45/100 &middot; README 3/5, Tests, License, Lint config</td></tr>
+      </table>
+    </div>
+    <div>
+      <table class="kv">
+        <tr><td>Your commits</td><td>5 of 5 (100%)</td></tr>
+        <tr><td>Files modified</td><td>10</td></tr>
+        <tr><td>Additions / deletions</td><td>+964 / -21</td></tr>
+        <tr><td>Surviving lines</td><td>327 of 327 lines (100%)</td></tr>
+      </table>
+    </div>
+  </div>
+  <h4>Major development areas</h4>
+  <table class="bars">
+    <tr><td style="width:24%">Documentation</td><td><div class="bar"><i style="width:44.2%"></i></div></td><td class="r small muted" style="width:22%">44% &middot; 435 lines</td></tr>
+    <tr><td style="width:24%">UI</td><td><div class="bar"><i style="width:26.5%"></i></div></td><td class="r small muted" style="width:22%">26% &middot; 261 lines</td></tr>
+    <tr><td style="width:24%">ML/Data</td><td><div class="bar"><i style="width:21.3%"></i></div></td><td class="r small muted" style="width:22%">21% &middot; 210 lines</td></tr>
+    <tr><td style="width:24%">Backend/API</td><td><div class="bar"><i style="width:7.6%"></i></div></td><td class="r small muted" style="width:22%">8% &middot; 75 lines</td></tr>
+    <tr><td style="width:24%">Other</td><td><div class="bar"><i style="width:0.4%"></i></div></td><td class="r small muted" style="width:22%">0% &middot; 4 lines</td></tr>
+  </table>
+  <p class="small muted">Commit types: docs 2, feature 2, init 1</p>
+  <h4>Development timeline</h4>
+  <ul><li><b>Phase 1</b> (2025-09-21 to 2026-01-08, 5 commits): Project setup &amp; foundations - UI, Documentation</li></ul>
+  <h4>Evidence</h4>
+  <div class="flags"><span class="yes">&#10003; Commits</span><span class="no">&#10007; Pull requests</span><span class="no">&#10007; Releases</span><span class="no">&#10007; Issues</span><span class="yes">&#10003; Code changes</span><span class="yes">&#10003; History</span></div>
+  <table>
+    <tr><th>Commit</th><th>Date</th><th>Why it matters</th><th>Message</th></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/Finura-v1.2/commit/c0bbc087a7531869b86bc57e6ce0e577d15f21eb">c0bbc08</a></td><td>2025-09-21</td><td>First commit</td><td>Initial commit</td></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/Finura-v1.2/commit/0f21cac94d3ff2bbfd8106d64d9d2fe1bae207d5">0f21cac</a></td><td>2025-09-21</td><td>Large change</td><td>Track large files with Git LFS</td></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/Finura-v1.2/commit/de34c2e2939ec850b5ecb7029cf1f14678d3e8c2">de34c2e</a></td><td>2026-01-08</td><td>Large change</td><td>implement ml_chat for give reply the text for chat</td></tr>
+  </table>
+  <p class="small"><a href="https://github.com/Saqlain-mushtaq-alamin/Finura-v1.2/commits?author=Saqlain-mushtaq-alamin">All commits by Saqlain-mushtaq-alamin in this repository</a></p>
+</section>
+<section class="project">
+  <h3><a href="https://github.com/Saqlain-mushtaq-alamin/Saqlain-mushtaq-alamin">Saqlain-mushtaq-alamin</a></h3>
+  <p class="purpose">⚡ CSE Student · AI Explorer · Software Engineer</p>
+  <div class="cols">
+    <div>
+      <table class="kv">
+        <tr><td>Languages</td><td>n/a</td></tr>
+        <tr><td>Frameworks / tools</td><td>none detected</td></tr>
+        <tr><td>Period</td><td>Jan 2026 to May 2026 (4.8 months)</td></tr>
+        <tr><td>Quality</td><td>15/100 &middot; README 3/5</td></tr>
+      </table>
+    </div>
+    <div>
+      <table class="kv">
+        <tr><td>Your commits</td><td>5 of 5 (100%)</td></tr>
+        <tr><td>Files modified</td><td>1</td></tr>
+        <tr><td>Additions / deletions</td><td>+154 / -53</td></tr>
+        <tr><td>Surviving lines</td><td>0 of 0 lines</td></tr>
+      </table>
+    </div>
+  </div>
+  <h4>Major development areas</h4>
+  <table class="bars">
+    <tr><td style="width:24%">Documentation</td><td><div class="bar"><i style="width:100.0%"></i></div></td><td class="r small muted" style="width:22%">100% &middot; 207 lines</td></tr>
+  </table>
+  <p class="small muted">Commit types: docs 5</p>
+  <h4>Development timeline</h4>
+  <ul><li><b>Phase 1</b> (2026-01-05 to 2026-05-31, 5 commits): Testing, documentation &amp; tooling - Documentation</li></ul>
+  <h4>Evidence</h4>
+  <div class="flags"><span class="yes">&#10003; Commits</span><span class="no">&#10007; Pull requests</span><span class="no">&#10007; Releases</span><span class="no">&#10007; Issues</span><span class="yes">&#10003; Code changes</span><span class="yes">&#10003; History</span></div>
+  <table>
+    <tr><th>Commit</th><th>Date</th><th>Why it matters</th><th>Message</th></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/Saqlain-mushtaq-alamin/commit/88fa72f90bb2d74f2156c5d90d0a9b5b51208c1c">88fa72f</a></td><td>2026-01-05</td><td>First commit</td><td>Initial commit</td></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/Saqlain-mushtaq-alamin/commit/e0465b7f5fc5bf40babffffc476dd7074a6894b5">e0465b7</a></td><td>2026-05-31</td><td>Latest commit</td><td>Update README with new project details</td></tr>
+  </table>
+  <p class="small"><a href="https://github.com/Saqlain-mushtaq-alamin/Saqlain-mushtaq-alamin/commits?author=Saqlain-mushtaq-alamin">All commits by Saqlain-mushtaq-alamin in this repository</a></p>
+</section>
+<section class="project">
+  <h3><a href="https://github.com/Saqlain-mushtaq-alamin/SC-RAG">SC-RAG</a></h3>
+  <p class="purpose">This project implements a Self-Correcting Retrieval-Augmented Generation (RAG) system utilizing a LangGraph state machine to dynamically grade retrieved document relevance, verify answer groundedness, evaluate usefulness, and recursively correct the query or generate a revised an...</p>
+  <div class="cols">
+    <div>
+      <table class="kv">
+        <tr><td>Languages</td><td>Python 100%</td></tr>
+        <tr><td>Frameworks / tools</td><td>FAISS, LangChain, Pydantic, Sentence Transformers</td></tr>
+        <tr><td>Period</td><td>Jun 2026 to Jun 2026 (0.0 months)</td></tr>
+        <tr><td>Quality</td><td>40/100 &middot; README 3/5, Tests</td></tr>
+      </table>
+    </div>
+    <div>
+      <table class="kv">
+        <tr><td>Your commits</td><td>1 of 5 (20%)</td></tr>
+        <tr><td>Files modified</td><td>8</td></tr>
+        <tr><td>Additions / deletions</td><td>+0 / -0</td></tr>
+        <tr><td>Surviving lines</td><td>0 of 3,439 lines (0%)</td></tr>
+      </table>
+    </div>
+  </div>
+  <h4>Major development areas</h4>
+  <table class="bars">
+    <tr><td style="width:24%">Build &amp; Config</td><td><div class="bar"><i style="width:0.0%"></i></div></td><td class="r small muted" style="width:22%">0% &middot; 0 lines</td></tr>
+    <tr><td style="width:24%">Documentation</td><td><div class="bar"><i style="width:0.0%"></i></div></td><td class="r small muted" style="width:22%">0% &middot; 0 lines</td></tr>
+    <tr><td style="width:24%">Core Logic</td><td><div class="bar"><i style="width:0.0%"></i></div></td><td class="r small muted" style="width:22%">0% &middot; 0 lines</td></tr>
+    <tr><td style="width:24%">ML/Data</td><td><div class="bar"><i style="width:0.0%"></i></div></td><td class="r small muted" style="width:22%">0% &middot; 0 lines</td></tr>
+  </table>
+  <p class="small muted">Commit types: feature 1</p>
+  <h4>Development timeline</h4>
+  <ul><li><b>Phase 1</b> (2026-06-23 to 2026-06-23, 1 commits): Feature development</li></ul>
+  <h4>Evidence</h4>
+  <div class="flags"><span class="yes">&#10003; Commits</span><span class="no">&#10007; Pull requests</span><span class="no">&#10007; Releases</span><span class="no">&#10007; Issues</span><span class="no">&#10007; Code changes</span><span class="no">&#10007; History</span></div>
+  <table>
+    <tr><th>Commit</th><th>Date</th><th>Why it matters</th><th>Message</th></tr>
+    <tr><td><a class="mono" href="https://github.com/Saqlain-mushtaq-alamin/SC-RAG/commit/9a97bb616849912a24e88f4d94afb8460da99343">9a97bb6</a></td><td>2026-06-23</td><td>First commit</td><td>create all the intiall file</td></tr>
+  </table>
+  <p class="small"><a href="https://github.com/Saqlain-mushtaq-alamin/SC-RAG/commits?author=Saqlain-mushtaq-alamin">All commits by Saqlain-mushtaq-alamin in this repository</a></p>
+</section>
+
+<h2>6. Contribution timeline</h2>
+<div class="cols">
+  <div>
+    <h4>Commits per year</h4>
+    <table class="bars">
+<tr><td style="width:14%">2025</td><td><div class="bar"><i style="width:6.5%"></i></div></td><td class="r" style="width:14%">161</td></tr><tr><td style="width:14%">2026</td><td><div class="bar"><i style="width:100.0%"></i></div></td><td class="r" style="width:14%">2,471</td></tr>    </table>
+  </div>
+  <div>
+    <h4>Commits per month (last 24 active months)</h4>
+    <div class="chart"><i style="height:0.7%" title="2025-01: 5"></i><i style="height:1.9%" title="2025-05: 14"></i><i style="height:1.9%" title="2025-09: 14"></i><i style="height:1.9%" title="2025-10: 14"></i><i style="height:2.7%" title="2025-11: 20"></i><i style="height:12.6%" title="2025-12: 94"></i><i style="height:2.7%" title="2026-01: 20"></i><i style="height:5.1%" title="2026-02: 38"></i><i style="height:12.8%" title="2026-03: 96"></i><i style="height:5.1%" title="2026-04: 38"></i><i style="height:13.0%" title="2026-05: 97"></i><i style="height:8.8%" title="2026-06: 66"></i><i style="height:83.0%" title="2026-07: 622"></i><i style="height:82.5%" title="2026-08: 618"></i><i style="height:100.0%" title="2026-09: 749"></i><i style="height:17.0%" title="2026-10: 127"></i></div>
+<div class="chart-labels"><span>2025-01</span><span>2026-10</span></div>  </div>
+</div>
+
+<h2>7. Technology usage</h2>
+<table class="bars">
+<tr><td style="width:20%">Python</td><td><div class="bar"><i style="width:100.0%"></i></div></td><td class="r" style="width:20%">47.3% &middot; 116,731</td></tr><tr><td style="width:20%">TypeScript</td><td><div class="bar"><i style="width:74.8%"></i></div></td><td class="r" style="width:20%">35.4% &middot; 87,331</td></tr><tr><td style="width:20%">CSS</td><td><div class="bar"><i style="width:19.3%"></i></div></td><td class="r" style="width:20%">9.1% &middot; 22,546</td></tr><tr><td style="width:20%">C++</td><td><div class="bar"><i style="width:4.8%"></i></div></td><td class="r" style="width:20%">2.3% &middot; 5,640</td></tr><tr><td style="width:20%">Java</td><td><div class="bar"><i style="width:4.4%"></i></div></td><td class="r" style="width:20%">2.1% &middot; 5,085</td></tr><tr><td style="width:20%">HTML</td><td><div class="bar"><i style="width:3.8%"></i></div></td><td class="r" style="width:20%">1.8% &middot; 4,492</td></tr><tr><td style="width:20%">Solidity</td><td><div class="bar"><i style="width:1.2%"></i></div></td><td class="r" style="width:20%">0.6% &middot; 1,433</td></tr><tr><td style="width:20%">JavaScript</td><td><div class="bar"><i style="width:0.8%"></i></div></td><td class="r" style="width:20%">0.4% &middot; 910</td></tr></table>
+
+<h2>8. Open source contributions</h2>
+<p class="muted">No pull requests to other people's repositories were found.</p>
+<h2>9. Major development milestones</h2>
+<ul><li><b>2026-06-07</b> &mdash; <a href="https://github.com/Saqlain-mushtaq-alamin/portfolio-site/commit/284ee73f5d357eb1ec7e08cd9d9b2d34aec4fc9d">portfolio-site: Feature development - UI</a></li><li><b>2026-06-11</b> &mdash; <a href="https://github.com/Saqlain-mushtaq-alamin/StudyMap/commit/a1f8b12ca467b8bdf01492b4b2be0d89384984e1">Started StudyMap</a></li><li><b>2026-06-23</b> &mdash; <a href="https://github.com/Saqlain-mushtaq-alamin/SC-RAG/commit/9a97bb616849912a24e88f4d94afb8460da99343">Started SC-RAG</a></li><li><b>2026-06-30</b> &mdash; <a href="https://github.com/Saqlain-mushtaq-alamin/pptx2pdf_app/commit/01a5b66a94fd621b6a72d5b8c4dc283345ab5ea9">Started pptx2pdf_app</a></li><li><b>2026-07-03</b> &mdash; <a href="https://github.com/Saqlain-mushtaq-alamin/VeritasCore/commit/1e2ff1c826e44931a764d66c93defa5ac195a52d">Started VeritasCore</a></li><li><b>2026-07-08</b> &mdash; <a href="https://github.com/Saqlain-mushtaq-alamin/envobyte-monica-favorites/commit/9416f8f424a3228766c243beae5a53122a4e1008">Started envobyte-monica-favorites</a></li><li><b>2026-07-16</b> &mdash; <a href="https://github.com/Saqlain-mushtaq-alamin/Poise-/commit/fc196f08bf0de6279383a581aa318f07b60bdef0">Started Poise-</a></li><li><b>2026-07-18</b> &mdash; <a href="https://github.com/Saqlain-mushtaq-alamin/eco-dms/commit/6933ba9ebf6a7223fbc7d8ec81124050eccde0b1">eco-dms: Feature development - UI, Core Logic</a></li><li><b>2026-07-18</b> &mdash; <a href="https://github.com/Saqlain-mushtaq-alamin/VeritasCore/releases/tag/v1.0.0">VeritasCore release v1.0.0</a></li><li><b>2026-08-03</b> &mdash; <a href="https://github.com/Saqlain-mushtaq-alamin/DRIFT-X/commit/161068a85a8f5926f4de7b08a60c59080abe5963">Started DRIFT-X</a></li><li><b>2026-08-05</b> &mdash; <a href="https://github.com/Saqlain-mushtaq-alamin/UA-HCMARL/commit/8d2cdf63a4e481b22c5c4f4c0ffa485a42f31142">Started UA-HCMARL</a></li><li><b>2026-08-17</b> &mdash; <a href="https://github.com/Saqlain-mushtaq-alamin/sentry-/commit/386b17ed39c6b093f6d2e71545ea6e2cb82907b2">Started sentry-</a></li><li><b>2026-08-27</b> &mdash; <a href="https://github.com/Saqlain-mushtaq-alamin/RepoBrief/commit/650350da464e93fa421b0a95c0ffda33304324d7">Started RepoBrief</a></li><li><b>2026-09-05</b> &mdash; <a href="https://github.com/Saqlain-mushtaq-alamin/RepoBrief/releases/tag/v0.1.1">RepoBrief release v0.1.1</a></li><li><b>2026-09-06</b> &mdash; <a href="https://github.com/Saqlain-mushtaq-alamin/NIDS/commit/07b6b8a2bd65f9fa5de77a7c32adc4900a28c449">Started NIDS</a></li><li><b>2026-09-07</b> &mdash; <a href="https://github.com/Saqlain-mushtaq-alamin/NearShare/commit/013ed8215ec484a24028949af1aaac82b0ead124">Started NearShare</a></li><li><b>2026-09-24</b> &mdash; <a href="https://github.com/Saqlain-mushtaq-alamin/D-T_Pool/commit/756a542736301805bc24d0cb1c291e29a7941a8b">Started D-T_Pool</a></li><li><b>2026-09-26</b> &mdash; <a href="https://github.com/Saqlain-mushtaq-alamin/D-T_Pool/releases/tag/v1.0.0">D-T_Pool release v1.0.0</a></li><li><b>2026-09-29</b> &mdash; <a href="https://github.com/Saqlain-mushtaq-alamin/ByteSpace-/commit/d4e6d359b02efc48cfc36dc4c59697f5a214d577">Started ByteSpace-</a></li><li><b>2026-10-01</b> &mdash; <a href="https://github.com/Saqlain-mushtaq-alamin/ByteSpace-/pull/1">ByteSpace-: first merged PR - Build ByteSpace landing page, login and signup </a></li></ul>
+
+<h2>10. Evidence of work</h2>
+<table>
+  <tr><th>Project</th><th>Commits</th><th>PRs</th><th>Releases</th><th>Issues</th><th>Code</th><th>History</th><th>Source</th></tr>
+  <tr><td>eco-dms</td><td class="yes">&#10003;</td><td class="no">&#10007;</td><td class="no">&#10007;</td><td class="no">&#10007;</td><td class="yes">&#10003;</td><td class="yes">&#10003;</td><td><a href="https://github.com/Saqlain-mushtaq-alamin/eco-dms/commits?author=Saqlain-mushtaq-alamin">commits</a></td></tr>
+  <tr><td>Poise-</td><td class="yes">&#10003;</td><td class="no">&#10007;</td><td class="no">&#10007;</td><td class="no">&#10007;</td><td class="yes">&#10003;</td><td class="yes">&#10003;</td><td><a href="https://github.com/Saqlain-mushtaq-alamin/Poise-/commits?author=Saqlain-mushtaq-alamin">commits</a></td></tr>
+  <tr><td>ARIA</td><td class="yes">&#10003;</td><td class="yes">&#10003;</td><td class="no">&#10007;</td><td class="no">&#10007;</td><td class="yes">&#10003;</td><td class="yes">&#10003;</td><td><a href="https://github.com/Saqlain-mushtaq-alamin/ARIA/commits?author=Saqlain-mushtaq-alamin">commits</a></td></tr>
+  <tr><td>sentry-</td><td class="yes">&#10003;</td><td class="no">&#10007;</td><td class="no">&#10007;</td><td class="no">&#10007;</td><td class="yes">&#10003;</td><td class="yes">&#10003;</td><td><a href="https://github.com/Saqlain-mushtaq-alamin/sentry-/commits?author=Saqlain-mushtaq-alamin">commits</a></td></tr>
+  <tr><td>VeritasCore</td><td class="yes">&#10003;</td><td class="no">&#10007;</td><td class="yes">&#10003;</td><td class="no">&#10007;</td><td class="yes">&#10003;</td><td class="yes">&#10003;</td><td><a href="https://github.com/Saqlain-mushtaq-alamin/VeritasCore/commits?author=Saqlain-mushtaq-alamin">commits</a></td></tr>
+  <tr><td>NIDS</td><td class="yes">&#10003;</td><td class="no">&#10007;</td><td class="no">&#10007;</td><td class="no">&#10007;</td><td class="yes">&#10003;</td><td class="yes">&#10003;</td><td><a href="https://github.com/Saqlain-mushtaq-alamin/NIDS/commits?author=Saqlain-mushtaq-alamin">commits</a></td></tr>
+  <tr><td>StudyMap</td><td class="yes">&#10003;</td><td class="no">&#10007;</td><td class="no">&#10007;</td><td class="no">&#10007;</td><td class="yes">&#10003;</td><td class="yes">&#10003;</td><td><a href="https://github.com/Saqlain-mushtaq-alamin/StudyMap/commits?author=Saqlain-mushtaq-alamin">commits</a></td></tr>
+  <tr><td>portfolio-site</td><td class="yes">&#10003;</td><td class="no">&#10007;</td><td class="no">&#10007;</td><td class="no">&#10007;</td><td class="yes">&#10003;</td><td class="yes">&#10003;</td><td><a href="https://github.com/Saqlain-mushtaq-alamin/portfolio-site/commits?author=Saqlain-mushtaq-alamin">commits</a></td></tr>
+  <tr><td>UA-HCMARL</td><td class="yes">&#10003;</td><td class="no">&#10007;</td><td class="no">&#10007;</td><td class="no">&#10007;</td><td class="yes">&#10003;</td><td class="yes">&#10003;</td><td><a href="https://github.com/Saqlain-mushtaq-alamin/UA-HCMARL/commits?author=Saqlain-mushtaq-alamin">commits</a></td></tr>
+  <tr><td>D-T_Pool</td><td class="yes">&#10003;</td><td class="no">&#10007;</td><td class="yes">&#10003;</td><td class="no">&#10007;</td><td class="yes">&#10003;</td><td class="yes">&#10003;</td><td><a href="https://github.com/Saqlain-mushtaq-alamin/D-T_Pool/commits?author=Saqlain-mushtaq-alamin">commits</a></td></tr>
+  <tr><td>Finanalyzer-</td><td class="yes">&#10003;</td><td class="no">&#10007;</td><td class="no">&#10007;</td><td class="no">&#10007;</td><td class="yes">&#10003;</td><td class="yes">&#10003;</td><td><a href="https://github.com/Saqlain-mushtaq-alamin/Finanalyzer-/commits?author=Saqlain-mushtaq-alamin">commits</a></td></tr>
+  <tr><td>Civitas-X</td><td class="yes">&#10003;</td><td class="no">&#10007;</td><td class="no">&#10007;</td><td class="no">&#10007;</td><td class="yes">&#10003;</td><td class="yes">&#10003;</td><td><a href="https://github.com/Saqlain-mushtaq-alamin/Civitas-X/commits?author=Saqlain-mushtaq-alamin">commits</a></td></tr>
+  <tr><td>RepoBrief</td><td class="yes">&#10003;</td><td class="no">&#10007;</td><td class="yes">&#10003;</td><td class="no">&#10007;</td><td class="yes">&#10003;</td><td class="yes">&#10003;</td><td><a href="https://github.com/Saqlain-mushtaq-alamin/RepoBrief/commits?author=Saqlain-mushtaq-alamin">commits</a></td></tr>
+  <tr><td>ByteSpace-</td><td class="yes">&#10003;</td><td class="yes">&#10003;</td><td class="no">&#10007;</td><td class="no">&#10007;</td><td class="yes">&#10003;</td><td class="yes">&#10003;</td><td><a href="https://github.com/Saqlain-mushtaq-alamin/ByteSpace-/commits?author=Saqlain-mushtaq-alamin">commits</a></td></tr>
+  <tr><td>envobyte-monica-favorites</td><td class="yes">&#10003;</td><td class="no">&#10007;</td><td class="no">&#10007;</td><td class="no">&#10007;</td><td class="yes">&#10003;</td><td class="no">&#10007;</td><td><a href="https://github.com/Saqlain-mushtaq-alamin/envobyte-monica-favorites/commits?author=Saqlain-mushtaq-alamin">commits</a></td></tr>
+  <tr><td>NearShare</td><td class="yes">&#10003;</td><td class="no">&#10007;</td><td class="no">&#10007;</td><td class="no">&#10007;</td><td class="yes">&#10003;</td><td class="yes">&#10003;</td><td><a href="https://github.com/Saqlain-mushtaq-alamin/NearShare/commits?author=Saqlain-mushtaq-alamin">commits</a></td></tr>
+  <tr><td>pptx2pdf_app</td><td class="yes">&#10003;</td><td class="no">&#10007;</td><td class="no">&#10007;</td><td class="no">&#10007;</td><td class="yes">&#10003;</td><td class="yes">&#10003;</td><td><a href="https://github.com/Saqlain-mushtaq-alamin/pptx2pdf_app/commits?author=Saqlain-mushtaq-alamin">commits</a></td></tr>
+  <tr><td>driftlock</td><td class="yes">&#10003;</td><td class="no">&#10007;</td><td class="no">&#10007;</td><td class="no">&#10007;</td><td class="yes">&#10003;</td><td class="no">&#10007;</td><td><a href="https://github.com/Saqlain-mushtaq-alamin/driftlock/commits?author=Saqlain-mushtaq-alamin">commits</a></td></tr>
+  <tr><td>britannica</td><td class="yes">&#10003;</td><td class="no">&#10007;</td><td class="no">&#10007;</td><td class="no">&#10007;</td><td class="yes">&#10003;</td><td class="no">&#10007;</td><td><a href="https://github.com/Saqlain-mushtaq-alamin/britannica/commits?author=Saqlain-mushtaq-alamin">commits</a></td></tr>
+  <tr><td>Computer_Graphics_Lab</td><td class="yes">&#10003;</td><td class="yes">&#10003;</td><td class="no">&#10007;</td><td class="no">&#10007;</td><td class="yes">&#10003;</td><td class="yes">&#10003;</td><td><a href="https://github.com/Saqlain-mushtaq-alamin/Computer_Graphics_Lab/commits?author=Saqlain-mushtaq-alamin">commits</a></td></tr>
+  <tr><td>DRIFT-X</td><td class="yes">&#10003;</td><td class="no">&#10007;</td><td class="no">&#10007;</td><td class="no">&#10007;</td><td class="yes">&#10003;</td><td class="yes">&#10003;</td><td><a href="https://github.com/Saqlain-mushtaq-alamin/DRIFT-X/commits?author=Saqlain-mushtaq-alamin">commits</a></td></tr>
+  <tr><td>snakegame</td><td class="yes">&#10003;</td><td class="no">&#10007;</td><td class="no">&#10007;</td><td class="no">&#10007;</td><td class="yes">&#10003;</td><td class="yes">&#10003;</td><td><a href="https://github.com/Saqlain-mushtaq-alamin/snakegame/commits?author=Saqlain-mushtaq-alamin">commits</a></td></tr>
+  <tr><td>wifi-strength-scanner</td><td class="yes">&#10003;</td><td class="no">&#10007;</td><td class="no">&#10007;</td><td class="no">&#10007;</td><td class="yes">&#10003;</td><td class="yes">&#10003;</td><td><a href="https://github.com/Saqlain-mushtaq-alamin/wifi-strength-scanner/commits?author=Saqlain-mushtaq-alamin">commits</a></td></tr>
+  <tr><td>Finura-v1.2</td><td class="yes">&#10003;</td><td class="no">&#10007;</td><td class="no">&#10007;</td><td class="no">&#10007;</td><td class="yes">&#10003;</td><td class="yes">&#10003;</td><td><a href="https://github.com/Saqlain-mushtaq-alamin/Finura-v1.2/commits?author=Saqlain-mushtaq-alamin">commits</a></td></tr>
+  <tr><td>Saqlain-mushtaq-alamin</td><td class="yes">&#10003;</td><td class="no">&#10007;</td><td class="no">&#10007;</td><td class="no">&#10007;</td><td class="yes">&#10003;</td><td class="yes">&#10003;</td><td><a href="https://github.com/Saqlain-mushtaq-alamin/Saqlain-mushtaq-alamin/commits?author=Saqlain-mushtaq-alamin">commits</a></td></tr>
+  <tr><td>SC-RAG</td><td class="yes">&#10003;</td><td class="no">&#10007;</td><td class="no">&#10007;</td><td class="no">&#10007;</td><td class="no">&#10007;</td><td class="no">&#10007;</td><td><a href="https://github.com/Saqlain-mushtaq-alamin/SC-RAG/commits?author=Saqlain-mushtaq-alamin">commits</a></td></tr>
+</table>
+<p class="small muted">Not included in the analysis: monica (no commits attributed to this user), gitproof (repository has no commits), slm-calibration-quantization (repository has no commits), OIBSIP- (repository has no commits), huntR (repository has no commits), flutter (repository larger than 300 MB)</p>
+<h2>11. GitHub verification links</h2>
+<ul>
+<li>Profile: <a href="https://github.com/Saqlain-mushtaq-alamin">https://github.com/Saqlain-mushtaq-alamin</a></li><li>All pull requests: <a href="https://github.com/pulls?q=author%3ASaqlain-mushtaq-alamin+type%3Apr">https://github.com/pulls?q=author%3ASaqlain-mushtaq-alamin+type%3Apr</a></li><li>All issues: <a href="https://github.com/issues?q=author%3ASaqlain-mushtaq-alamin+type%3Aissue">https://github.com/issues?q=author%3ASaqlain-mushtaq-alamin+type%3Aissue</a></li><li>eco-dms commits: <a href="https://github.com/Saqlain-mushtaq-alamin/eco-dms/commits?author=Saqlain-mushtaq-alamin">https://github.com/Saqlain-mushtaq-alamin/eco-dms/commits?author=Saqlain-mushtaq-alamin</a></li><li>Poise- commits: <a href="https://github.com/Saqlain-mushtaq-alamin/Poise-/commits?author=Saqlain-mushtaq-alamin">https://github.com/Saqlain-mushtaq-alamin/Poise-/commits?author=Saqlain-mushtaq-alamin</a></li><li>ARIA commits: <a href="https://github.com/Saqlain-mushtaq-alamin/ARIA/commits?author=Saqlain-mushtaq-alamin">https://github.com/Saqlain-mushtaq-alamin/ARIA/commits?author=Saqlain-mushtaq-alamin</a></li><li>sentry- commits: <a href="https://github.com/Saqlain-mushtaq-alamin/sentry-/commits?author=Saqlain-mushtaq-alamin">https://github.com/Saqlain-mushtaq-alamin/sentry-/commits?author=Saqlain-mushtaq-alamin</a></li><li>VeritasCore commits: <a href="https://github.com/Saqlain-mushtaq-alamin/VeritasCore/commits?author=Saqlain-mushtaq-alamin">https://github.com/Saqlain-mushtaq-alamin/VeritasCore/commits?author=Saqlain-mushtaq-alamin</a></li><li>NIDS commits: <a href="https://github.com/Saqlain-mushtaq-alamin/NIDS/commits?author=Saqlain-mushtaq-alamin">https://github.com/Saqlain-mushtaq-alamin/NIDS/commits?author=Saqlain-mushtaq-alamin</a></li><li>StudyMap commits: <a href="https://github.com/Saqlain-mushtaq-alamin/StudyMap/commits?author=Saqlain-mushtaq-alamin">https://github.com/Saqlain-mushtaq-alamin/StudyMap/commits?author=Saqlain-mushtaq-alamin</a></li><li>portfolio-site commits: <a href="https://github.com/Saqlain-mushtaq-alamin/portfolio-site/commits?author=Saqlain-mushtaq-alamin">https://github.com/Saqlain-mushtaq-alamin/portfolio-site/commits?author=Saqlain-mushtaq-alamin</a></li><li>UA-HCMARL commits: <a href="https://github.com/Saqlain-mushtaq-alamin/UA-HCMARL/commits?author=Saqlain-mushtaq-alamin">https://github.com/Saqlain-mushtaq-alamin/UA-HCMARL/commits?author=Saqlain-mushtaq-alamin</a></li><li>D-T_Pool commits: <a href="https://github.com/Saqlain-mushtaq-alamin/D-T_Pool/commits?author=Saqlain-mushtaq-alamin">https://github.com/Saqlain-mushtaq-alamin/D-T_Pool/commits?author=Saqlain-mushtaq-alamin</a></li><li>Finanalyzer- commits: <a href="https://github.com/Saqlain-mushtaq-alamin/Finanalyzer-/commits?author=Saqlain-mushtaq-alamin">https://github.com/Saqlain-mushtaq-alamin/Finanalyzer-/commits?author=Saqlain-mushtaq-alamin</a></li><li>Civitas-X commits: <a href="https://github.com/Saqlain-mushtaq-alamin/Civitas-X/commits?author=Saqlain-mushtaq-alamin">https://github.com/Saqlain-mushtaq-alamin/Civitas-X/commits?author=Saqlain-mushtaq-alamin</a></li><li>RepoBrief commits: <a href="https://github.com/Saqlain-mushtaq-alamin/RepoBrief/commits?author=Saqlain-mushtaq-alamin">https://github.com/Saqlain-mushtaq-alamin/RepoBrief/commits?author=Saqlain-mushtaq-alamin</a></li><li>ByteSpace- commits: <a href="https://github.com/Saqlain-mushtaq-alamin/ByteSpace-/commits?author=Saqlain-mushtaq-alamin">https://github.com/Saqlain-mushtaq-alamin/ByteSpace-/commits?author=Saqlain-mushtaq-alamin</a></li><li>envobyte-monica-favorites commits: <a href="https://github.com/Saqlain-mushtaq-alamin/envobyte-monica-favorites/commits?author=Saqlain-mushtaq-alamin">https://github.com/Saqlain-mushtaq-alamin/envobyte-monica-favorites/commits?author=Saqlain-mushtaq-alamin</a></li><li>NearShare commits: <a href="https://github.com/Saqlain-mushtaq-alamin/NearShare/commits?author=Saqlain-mushtaq-alamin">https://github.com/Saqlain-mushtaq-alamin/NearShare/commits?author=Saqlain-mushtaq-alamin</a></li><li>pptx2pdf_app commits: <a href="https://github.com/Saqlain-mushtaq-alamin/pptx2pdf_app/commits?author=Saqlain-mushtaq-alamin">https://github.com/Saqlain-mushtaq-alamin/pptx2pdf_app/commits?author=Saqlain-mushtaq-alamin</a></li><li>driftlock commits: <a href="https://github.com/Saqlain-mushtaq-alamin/driftlock/commits?author=Saqlain-mushtaq-alamin">https://github.com/Saqlain-mushtaq-alamin/driftlock/commits?author=Saqlain-mushtaq-alamin</a></li><li>britannica commits: <a href="https://github.com/Saqlain-mushtaq-alamin/britannica/commits?author=Saqlain-mushtaq-alamin">https://github.com/Saqlain-mushtaq-alamin/britannica/commits?author=Saqlain-mushtaq-alamin</a></li><li>Computer_Graphics_Lab commits: <a href="https://github.com/Saqlain-mushtaq-alamin/Computer_Graphics_Lab/commits?author=Saqlain-mushtaq-alamin">https://github.com/Saqlain-mushtaq-alamin/Computer_Graphics_Lab/commits?author=Saqlain-mushtaq-alamin</a></li><li>DRIFT-X commits: <a href="https://github.com/Saqlain-mushtaq-alamin/DRIFT-X/commits?author=Saqlain-mushtaq-alamin">https://github.com/Saqlain-mushtaq-alamin/DRIFT-X/commits?author=Saqlain-mushtaq-alamin</a></li><li>snakegame commits: <a href="https://github.com/Saqlain-mushtaq-alamin/snakegame/commits?author=Saqlain-mushtaq-alamin">https://github.com/Saqlain-mushtaq-alamin/snakegame/commits?author=Saqlain-mushtaq-alamin</a></li><li>wifi-strength-scanner commits: <a href="https://github.com/Saqlain-mushtaq-alamin/wifi-strength-scanner/commits?author=Saqlain-mushtaq-alamin">https://github.com/Saqlain-mushtaq-alamin/wifi-strength-scanner/commits?author=Saqlain-mushtaq-alamin</a></li><li>Finura-v1.2 commits: <a href="https://github.com/Saqlain-mushtaq-alamin/Finura-v1.2/commits?author=Saqlain-mushtaq-alamin">https://github.com/Saqlain-mushtaq-alamin/Finura-v1.2/commits?author=Saqlain-mushtaq-alamin</a></li><li>Saqlain-mushtaq-alamin commits: <a href="https://github.com/Saqlain-mushtaq-alamin/Saqlain-mushtaq-alamin/commits?author=Saqlain-mushtaq-alamin">https://github.com/Saqlain-mushtaq-alamin/Saqlain-mushtaq-alamin/commits?author=Saqlain-mushtaq-alamin</a></li><li>SC-RAG commits: <a href="https://github.com/Saqlain-mushtaq-alamin/SC-RAG/commits?author=Saqlain-mushtaq-alamin">https://github.com/Saqlain-mushtaq-alamin/SC-RAG/commits?author=Saqlain-mushtaq-alamin</a></li></ul>
+
+<h2>12. Methodology and limitations</h2>
+<ul class="small"><li>Only commits whose author email or name matches the developer&#39;s GitHub identity are counted. Names are matched only inside repositories the developer owns.</li><li>Lock files, vendored or generated code, build output, binary assets and data files are excluded from line counts. Commits that import 150+ files or 20,000+ lines at once are treated as bulk imports and excluded from line counts, including surviving lines (they still count as commits).</li><li>Merge commits are not counted as work. Forks appear only when they contain commits attributed to the developer, and the history shown is the fork&#39;s own history.</li><li>&#34;Surviving lines&#34; come from `git blame` at the default branch and show how much of the developer&#39;s code is still present. For very large repositories only the largest source files are sampled, and this is flagged per project.</li><li>Commit types, development areas and phases are derived from commit messages, file paths and activity gaps by fixed rules, so the same history always gives the same result. They are heuristics, not a judgement of quality.</li><li>Skills marked &#39;strong&#39; come from files the developer changed. Skills marked &#39;inferred&#39; come from dependency manifests the developer edited, so first-seen dates are approximate.</li><li>Technology domains in the summary are inferred from the technologies used and are not a job title.</li><li>Every statistic links to commits, pull requests or releases on GitHub so it can be verified independently.</li><li>Surviving-line figures were sampled for: Civitas-X.</li><li>Data note: API quota low: skipped identity learning for some repositories (use a token for best attribution).</li><li>Data note: Skipped Saqlain-mushtaq-alamin/flutter: repository larger than 300 MB</li></ul>
+
+<div class="verify"><b>Verify this report.</b> Data fingerprint (SHA-256): <span class="mono">bdffdaa514d89fabdb7b34e651eb065ffd8ac8585770e3537e403fff070f0289</span><br>
+Re-create it with: <span class="mono">gitproof verify Saqlain-mushtaq-alamin-proof-of-work.json</span></div>
+
+<footer class="end">Generated by gitproof v0.1.0. Figures describe repositories analyzed on 2026-10-04; every statistic links to commits, pull requests or releases on GitHub.</footer>
+</body>
+</html>
