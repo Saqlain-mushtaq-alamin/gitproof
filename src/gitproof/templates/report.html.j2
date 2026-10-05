@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Developer Proof of Work - {{ p.name }}</title>
+<style>
+:root {
+  --ink: #17202a; --muted: #5d6b79; --line: #dfe5ea; --soft: #f4f7f9;
+  --accent: #0b6e69; --accent-soft: #e3f3f1; --good: #1b7f4c; --warn: #9a6700; --bad: #b3261e;
+}
+@page { size: A4; margin: 16mm 15mm 18mm 15mm;
+  @bottom-left { content: "Developer Proof of Work - {{ p.name }}"; font: 8pt/1 sans-serif; color: #8a97a3; }
+  @bottom-right { content: counter(page) " / " counter(pages); font: 8pt/1 sans-serif; color: #8a97a3; } }
+* { box-sizing: border-box; }
+html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+body { margin: 0; color: var(--ink); background: #fff; font: 9.6pt/1.45 "Inter", "Segoe UI", "Helvetica Neue", Arial, sans-serif; }
+a { color: var(--accent); text-decoration: none; }
+code, .mono { font-family: "SFMono-Regular", Consolas, "DejaVu Sans Mono", monospace; font-size: 8.4pt; }
+h1 { font-size: 24pt; margin: 0 0 2pt; letter-spacing: -0.4pt; }
+h2 { font-size: 13pt; margin: 20pt 0 6pt; padding-bottom: 4pt; border-bottom: 1.5pt solid var(--accent); break-after: avoid; }
+h3 { font-size: 11pt; margin: 0 0 4pt; }
+h4 { font-size: 8.4pt; margin: 10pt 0 3pt; text-transform: uppercase; letter-spacing: .6pt; color: var(--muted); break-after: avoid; }
+p { margin: 0 0 6pt; }
+.muted { color: var(--muted); }
+.small { font-size: 8.4pt; }
+header.top { border-left: 5pt solid var(--accent); padding: 2pt 0 2pt 12pt; margin-bottom: 12pt; }
+header.top .role { font-size: 11pt; color: var(--accent); font-weight: 600; }
+header.top .meta { margin-top: 4pt; color: var(--muted); }
+.stats { display: flex; gap: 8pt; margin: 10pt 0 4pt; }
+.stat { flex: 1; background: var(--soft); border-radius: 5pt; padding: 8pt 8pt 7pt; }
+.stat b { display: block; font-size: 15pt; letter-spacing: -.3pt; }
+.stat span { color: var(--muted); font-size: 8pt; }
+table { width: 100%; border-collapse: collapse; margin: 4pt 0 8pt; }
+th { text-align: left; font-size: 7.8pt; text-transform: uppercase; letter-spacing: .4pt; color: var(--muted);
+     border-bottom: 1pt solid var(--line); padding: 4pt 6pt 4pt 0; }
+td { padding: 4pt 6pt 4pt 0; border-bottom: .5pt solid var(--line); vertical-align: top; }
+th.r, td.r { text-align: right; padding-right: 0; }
+tr { break-inside: avoid; }
+.tag { display: inline-block; padding: 0 5pt; border-radius: 8pt; font-size: 7.6pt; font-weight: 600; }
+.tag.strong { background: #dff3e7; color: var(--good); } .tag.inferred { background: #fbefd2; color: var(--warn); }
+.bar { height: 7pt; background: var(--soft); border-radius: 4pt; overflow: hidden; }
+.bar i { display: block; height: 100%; background: var(--accent); }
+.bars td { border: 0; padding: 2pt 6pt 2pt 0; }
+.cols { display: flex; gap: 16pt; } .cols > div { flex: 1; min-width: 0; }
+.chart { display: flex; align-items: flex-end; gap: 2pt; height: 52pt; border-bottom: 1pt solid var(--line); margin-top: 6pt; }
+.chart i { flex: 1; background: var(--accent); border-radius: 1.5pt 1.5pt 0 0; min-height: 1.5pt; }
+.chart-labels { display: flex; justify-content: space-between; color: var(--muted); font-size: 7.4pt; margin-top: 2pt; }
+.project { break-inside: avoid-page; border: 1pt solid var(--line); border-radius: 6pt; padding: 10pt 12pt 8pt; margin: 0 0 10pt; }
+.project .purpose { color: var(--muted); font-style: italic; }
+.kv td:first-child { color: var(--muted); width: 32%; white-space: nowrap; }
+.kv td { border-bottom: .5pt solid var(--line); }
+.flags span { display: inline-block; margin-right: 8pt; font-size: 8.4pt; }
+.yes { color: var(--good); } .no { color: #a3adb7; }
+ul { margin: 2pt 0 6pt; padding-left: 14pt; } li { margin: 1pt 0; }
+.note { background: var(--accent-soft); border-radius: 5pt; padding: 7pt 10pt; font-size: 8.6pt; }
+.ai { border-left: 3pt solid #7a4fd0; background: #f3eefc; padding: 7pt 10pt; border-radius: 0 5pt 5pt 0; margin: 6pt 0; font-size: 9pt; }
+.ai small { color: #6b4aa3; display: block; margin-bottom: 2pt; font-weight: 600; }
+.verify { margin-top: 14pt; padding: 8pt 10pt; border: 1pt dashed var(--line); border-radius: 5pt; font-size: 8pt; color: var(--muted); word-break: break-all; }
+footer.end { margin-top: 18pt; color: var(--muted); font-size: 8pt; border-top: 1pt solid var(--line); padding-top: 6pt; }
+.summary-grid { display: flex; gap: 18pt; } .summary-grid > div { flex: 1; min-width: 0; }
+.pagebreak { break-before: page; }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <h1>{{ p.name }}</h1>
+  {% if p.focus %}<div class="role">{{ p.focus | join(" / ") }}</div>{% endif %}
+  <div class="meta">GitHub: <a href="{{ p.url }}">{{ p.url | replace("https://", "") }}</a>
+    {% if p.bio %} &middot; {{ p.bio }}{% endif %}
+    {% if p.location %} &middot; {{ p.location }}{% endif %}</div>
+  <div class="meta small">Developer proof of work &middot; generated {{ generated }} by gitproof v{{ version }}</div>
+</header>
+
+<div class="stats">
+  {% for value, label in stats %}
+  <div class="stat"><b>{{ value }}</b><span>{{ label }}</span></div>
+  {% endfor %}
+</div>
+
+<h2>{% if layout == "full" %}1. {% endif %}Professional summary</h2>
+<p>{{ summary }}</p>
+{% if ai_summary %}
+<div class="ai"><small>AI-generated, evidence-checked ({{ ai_summary.provider }} / {{ ai_summary.model }})</small>{{ ai_summary.text }}
+  <div class="small">Evidence: {% for e in ai_summary.evidence %}{% if e.url %}<a class="mono" href="{{ e.url }}">{{ e.id }}</a>{% else %}<span class="mono">{{ e.id }}</span>{% endif %} {% endfor %}</div></div>
+{% endif %}
+
+{% if layout == "summary" %}
+<div class="summary-grid">
+  <div>
+    <h2>Top skills</h2>
+    <table>
+      <tr><th>Skill</th><th>Since</th><th class="r">Commits</th></tr>
+      {% for s in skills %}
+      <tr><td>{{ s.name }} <span class="tag {{ s.confidence }}">{{ s.confidence }}</span></td><td>{{ s.first_label }}</td><td class="r">{{ fmt_int(s.commits) }}</td></tr>
+      {% endfor %}
+    </table>
+  </div>
+  <div>
+    <h2>Languages</h2>
+    <table class="bars">
+      {% for l in languages %}
+      <tr><td style="width:28%">{{ l.name }}</td><td><div class="bar"><i style="width:{{ l.width }}%"></i></div></td><td class="r" style="width:14%">{{ l.pct }}</td></tr>
+      {% endfor %}
+    </table>
+    <h2>Activity</h2>
+    <div class="chart">{% for m in monthly %}<i style="height:{{ m.height }}%" title="{{ m.month }}: {{ m.n }}"></i>{% endfor %}</div>
+    {% if monthly %}<div class="chart-labels"><span>{{ monthly[0].month }}</span><span>{{ monthly[-1].month }}</span></div>{% endif %}
+  </div>
+</div>
+
+<h2>Top projects</h2>
+<table>
+  <tr><th>Project</th><th>What it is</th><th>Stack</th><th>Period</th><th class="r">Commits</th></tr>
+  {% for r in projects %}
+  <tr><td><a href="{{ r.url }}"><b>{{ r.name }}</b></a></td><td>{{ r.purpose }}</td><td>{{ r.stack }}</td><td>{{ r.period_short }}</td><td class="r">{{ r.commits_fmt }}</td></tr>
+  {% endfor %}
+</table>
+{% else %}
+
+<h2>2. Technical skills</h2>
+<p class="small muted"><b>strong</b> = the developer changed files of that kind. <b>inferred</b> = it is a dependency in a manifest the developer edited (first-seen dates are approximate).</p>
+<table>
+  <tr><th>Skill</th><th>Category</th><th>First seen</th><th class="r">Repos</th><th class="r">Commits</th><th>Confidence</th><th>Evidence</th></tr>
+  {% for s in skills %}
+  <tr><td><b>{{ s.name }}</b></td><td>{{ s.category }}</td><td>{{ s.first_label }}</td><td class="r">{{ s.repo_count }}</td><td class="r">{{ fmt_int(s.commits) }}</td>
+      <td><span class="tag {{ s.confidence }}">{{ s.confidence }}</span></td>
+      <td>{% for l in s.links %}<a class="mono" href="{{ l.url }}">{{ l.sha }}</a> {% endfor %}</td></tr>
+  {% endfor %}
+</table>
+
+<h2>3. GitHub activity</h2>
+<table class="kv">
+  <tr><td>Repositories</td><td>{{ t.repos_total }} ({{ t.repos_owned }} original, {{ t.repos_forked }} forks; {{ t.repos_with_work }} with attributable commits)</td></tr>
+  <tr><td>Commits</td><td>{{ fmt_int(t.commits) }} on {{ plural(t.active_days, "active day") }}; longest streak {{ plural(t.longest_streak, "day") }}</td></tr>
+  <tr><td>Lines changed</td><td>{{ fmt_int(t.lines_changed) }} (+{{ fmt_int(t.additions) }} / -{{ fmt_int(t.deletions) }}, noise filtered){% if t.surviving_lines is not none %}; {{ fmt_int(t.surviving_lines) }} still present in current code{% endif %}</td></tr>
+  <tr><td>Pull requests</td><td>{{ pr.authored }} ({{ pr.merged }} merged, {{ pr.external_merged }} merged into other people's repositories)</td></tr>
+  <tr><td>Issues / reviews</td><td>{{ iss.authored }} issues opened{% if pr.reviews is not none %}; {{ pr.reviews }} pull requests reviewed{% endif %}</td></tr>
+  <tr><td>Active period</td><td>{{ fmt_date(t.first_activity) }} to {{ fmt_date(t.last_activity) }} ({{ t.years_active }} years); {{ plural(t.active_projects, "project") }} active in the last 180 days</td></tr>
+</table>
+
+<h2>4. Project portfolio</h2>
+<table>
+  <tr><th>Project</th><th>Purpose</th><th>Stack</th><th>Period</th><th class="r">Commits</th><th class="r">Lines</th><th class="r">Quality</th></tr>
+  {% for r in projects %}
+  <tr><td><a href="{{ r.url }}"><b>{{ r.name }}</b></a></td><td>{{ r.purpose }}</td><td>{{ r.stack }}</td><td>{{ r.period_short }}</td><td class="r">{{ r.commits_fmt }}</td><td class="r">{{ r.lines }}</td><td class="r">{{ r.quality.score }}/100</td></tr>
+  {% endfor %}
+</table>
+<p class="small muted">Lines = lines still present in the code when measurable, otherwise lines added. Quality is a 0-100 score from tests, CI, README, license, releases and tooling.</p>
+
+<h2 class="pagebreak">5. Project-by-project analysis</h2>
+{% for r in projects %}
+<section class="project">
+  <h3><a href="{{ r.url }}">{{ r.name }}</a>{% if r.is_fork %} <span class="muted small">(fork)</span>{% endif %}</h3>
+  <p class="purpose">{{ r.purpose }}</p>
+  {% set ai = ai_repos.get(r.full_name) if ai_repos else none %}
+  {% if ai %}<div class="ai"><small>AI-generated, evidence-checked ({{ ai.provider }} / {{ ai.model }})</small>{{ ai.text }}
+    <div class="small">Evidence: {% for e in ai.evidence %}{% if e.url %}<a class="mono" href="{{ e.url }}">{{ e.id }}</a>{% else %}<span class="mono">{{ e.id }}</span>{% endif %} {% endfor %}</div></div>{% endif %}
+  <div class="cols">
+    <div>
+      <table class="kv">
+        <tr><td>Languages</td><td>{{ r.languages_text }}</td></tr>
+        <tr><td>Frameworks / tools</td><td>{{ r.tools_text }}</td></tr>
+        <tr><td>Period</td><td>{{ r.period_text }}</td></tr>
+        <tr><td>Quality</td><td>{{ r.quality.score }}/100 &middot; {{ r.quality.badges | join(", ") }}</td></tr>
+      </table>
+    </div>
+    <div>
+      <table class="kv">
+        <tr><td>Your commits</td><td>{{ r.commits_fmt }} of {{ fmt_int(r.contribution.total_commits) }} ({{ r.share_text }})</td></tr>
+        <tr><td>Files modified</td><td>{{ fmt_int(r.contribution.files_modified) }}</td></tr>
+        <tr><td>Additions / deletions</td><td>+{{ fmt_int(r.contribution.additions) }} / -{{ fmt_int(r.contribution.deletions) }}</td></tr>
+        <tr><td>Surviving lines</td><td>{{ r.surviving_text }}</td></tr>
+      </table>
+    </div>
+  </div>
+  <h4>Major development areas</h4>
+  <table class="bars">
+    {% for a in r.areas_fmt %}
+    <tr><td style="width:24%">{{ a.area }}</td><td><div class="bar"><i style="width:{{ a.width }}%"></i></div></td><td class="r small muted" style="width:22%">{{ a.pct }}% &middot; {{ a.lines }} lines</td></tr>
+    {% endfor %}
+  </table>
+  <p class="small muted">Commit types: {{ r.types_text }}</p>
+  <h4>Development timeline</h4>
+  <ul>{% for ph in r.phases_fmt %}<li><b>Phase {{ ph.n }}</b> ({{ ph.range }}, {{ ph.commits }} commits): {{ ph.label }}</li>{% endfor %}</ul>
+  <h4>Evidence</h4>
+  <div class="flags">{% for label, ok in r.evidence_flags %}<span class="{{ 'yes' if ok else 'no' }}">{{ "&#10003;"|safe if ok else "&#10007;"|safe }} {{ label }}</span>{% endfor %}</div>
+  <table>
+    <tr><th>Commit</th><th>Date</th><th>Why it matters</th><th>Message</th></tr>
+    {% for k in r.key_commits_fmt %}
+    <tr><td><a class="mono" href="{{ k.url }}">{{ k.sha }}</a></td><td>{{ k.date }}</td><td>{{ k.reason }}</td><td>{{ k.subject }}</td></tr>
+    {% endfor %}
+  </table>
+  {% if r.pr_links or r.release_links %}
+  <p class="small">
+    {% if r.release_links %}<b>Releases:</b> {% for x in r.release_links %}<a href="{{ x.url }}">{{ x.label }}</a>{{ ", " if not loop.last }}{% endfor %}<br>{% endif %}
+    {% if r.pr_links %}<b>Pull requests:</b> {% for x in r.pr_links %}<a href="{{ x.url }}">{{ x.label }}</a>{{ " (merged)" if x.merged }}{{ "; " if not loop.last }}{% endfor %}{% endif %}
+  </p>
+  {% endif %}
+  <p class="small"><a href="{{ r.commits_url }}">All commits by {{ login }} in this repository</a></p>
+</section>
+{% endfor %}
+
+<h2>6. Contribution timeline</h2>
+<div class="cols">
+  <div>
+    <h4>Commits per year</h4>
+    <table class="bars">
+      {% for y in yearly %}<tr><td style="width:14%">{{ y.year }}</td><td><div class="bar"><i style="width:{{ y.width }}%"></i></div></td><td class="r" style="width:14%">{{ y.commits }}</td></tr>{% endfor %}
+    </table>
+  </div>
+  <div>
+    <h4>Commits per month (last 24 active months)</h4>
+    <div class="chart">{% for m in monthly %}<i style="height:{{ m.height }}%" title="{{ m.month }}: {{ m.n }}"></i>{% endfor %}</div>
+    {% if monthly %}<div class="chart-labels"><span>{{ monthly[0].month }}</span><span>{{ monthly[-1].month }}</span></div>{% endif %}
+  </div>
+</div>
+
+<h2>7. Technology usage</h2>
+<table class="bars">
+  {% for l in languages %}<tr><td style="width:20%">{{ l.name }}</td><td><div class="bar"><i style="width:{{ l.width }}%"></i></div></td><td class="r" style="width:20%">{{ l.pct }} &middot; {{ l.lines }}</td></tr>{% endfor %}
+</table>
+
+<h2>8. Open source contributions</h2>
+{% if open_source %}
+<table>
+  <tr><th>Repository</th><th>Pull request</th><th>Status</th><th>Date</th></tr>
+  {% for o in open_source %}
+  <tr><td><a href="https://github.com/{{ o.repo }}">{{ o.repo }}</a></td><td><a href="{{ o.url }}">#{{ o.number }} {{ o.title }}</a></td><td>{{ o.status }}</td><td>{{ o.date_label }}</td></tr>
+  {% endfor %}
+</table>
+{% else %}<p class="muted">No pull requests to other people's repositories were found.</p>{% endif %}
+
+<h2>9. Major development milestones</h2>
+{% if milestones %}<ul>{% for m in milestones %}<li><b>{{ m.date }}</b> &mdash; <a href="{{ m.url }}">{{ m.text }}</a></li>{% endfor %}</ul>
+{% else %}<p class="muted">No milestones available.</p>{% endif %}
+
+<h2>10. Evidence of work</h2>
+<table>
+  <tr><th>Project</th><th>Commits</th><th>PRs</th><th>Releases</th><th>Issues</th><th>Code</th><th>History</th><th>Source</th></tr>
+  {% for e in evidence %}
+  <tr><td>{{ e.name }}</td>{% for f in e.flags %}<td class="{{ 'yes' if f else 'no' }}">{{ "&#10003;"|safe if f else "&#10007;"|safe }}</td>{% endfor %}<td><a href="{{ e.commits_url }}">commits</a></td></tr>
+  {% endfor %}
+</table>
+{% if others %}<p class="small muted">Not included in the analysis: {% for o in others %}{{ o.name }} ({{ o.status_note or o.status }}){{ ", " if not loop.last }}{% endfor %}</p>{% endif %}
+
+<h2>11. GitHub verification links</h2>
+<ul>
+  {% for label, url in verification_links.items() %}<li>{{ label }}: <a href="{{ url }}">{{ url }}</a></li>{% endfor %}
+  {% for e in evidence %}<li>{{ e.name }} commits: <a href="{{ e.commits_url }}">{{ e.commits_url }}</a></li>{% endfor %}
+</ul>
+
+<h2>12. Methodology and limitations</h2>
+<ul class="small">{% for n in methodology %}<li>{{ n }}</li>{% endfor %}</ul>
+{% endif %}
+
+{% if verification %}
+<div class="verify"><b>Verify this report.</b> Data fingerprint (SHA-256): <span class="mono">{{ verification.digest }}</span><br>
+Re-create it with: <span class="mono">{{ verification.command }}</span></div>
+{% endif %}
+
+<footer class="end">Generated by gitproof v{{ version }}. Figures describe repositories analyzed on {{ generated }}; every statistic links to commits, pull requests or releases on GitHub.</footer>
+</body>
+</html>
